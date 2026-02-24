@@ -3,62 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AnGaPo</title>
+<title>AnGaPo | Desarrollo y Automatización</title>
 
 <style>
 body{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#0f0f0f,#1c1c1c);
     color:white;
-    text-align:center;
 }
 
 header{
-    padding:80px 20px;
+    text-align:center;
+    padding:100px 20px;
 }
 
-h1{
-    font-size:50px;
-    color:#00ffcc;
+header h1{
+    font-size:60px;
+    color:#00f5c4;
     margin-bottom:10px;
 }
 
-h2{
-    color:#00ffcc;
+header p{
+    font-size:20px;
+    color:#ccc;
 }
 
-p{
-    max-width:700px;
-    margin:auto;
-    line-height:1.6;
-}
-
-.button{
+.btn{
     display:inline-block;
-    padding:14px 30px;
-    background:#00ffcc;
+    margin-top:20px;
+    padding:15px 35px;
+    background:#00f5c4;
     color:black;
     text-decoration:none;
-    border-radius:6px;
+    border-radius:8px;
     font-weight:bold;
-    margin:15px;
     transition:0.3s;
 }
 
-.button:hover{
-    background:#00ccaa;
+.btn:hover{
+    background:white;
+    transform:scale(1.05);
 }
 
 section{
     padding:60px 20px;
+    max-width:1000px;
+    margin:auto;
+}
+
+h2{
+    text-align:center;
+    color:#00f5c4;
+    margin-bottom:40px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#1f1f1f;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,245,196,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 20px rgba(0,245,196,0.4);
 }
 
 footer{
+    text-align:center;
+    padding:30px;
     background:#111;
-    padding:20px;
-    font-size:14px;
-    margin-top:40px;
+    color:#aaa;
 }
 </style>
 </head>
@@ -66,27 +89,65 @@ footer{
 <body>
 
 <header>
-<h1>AnGaPo</h1>
-<p>Desarrollo de herramientas, automatización y proyectos tecnológicos prácticos.</p>
-
-<a class="button" href="https://youtube.com/@AnGaPosadas" target="_blank">
-Ver Canal de YouTube
-</a>
-
+    <h1>AnGaPo</h1>
+    <p>Desarrollo de herramientas, automatización y proyectos tecnológicos prácticos.</p>
+    <a href="https://youtube.com" class="btn" target="_blank">Ver Canal de YouTube</a>
 </header>
 
 <section>
-<h2>Proyectos</h2>
-<p>Aquí publicaré mis scripts, herramientas y proyectos desarrollados.</p>
+    <h2>Sobre mí</h2>
+    <p>Soy informático apasionado por la automatización, desarrollo de herramientas en Batch, PowerShell y proyectos tecnológicos prácticos. Me enfoco en crear soluciones funcionales y eficientes.</p>
 </section>
 
 <section>
-<h2>Sobre mí</h2>
-<p>Informático enfocado en la creación de soluciones reales para automatización en Windows, desarrollo de scripts y proyectos tecnológicos.</p>
+    <h2>Proyectos Destacados</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>🔐 Auditoría Windows</h3>
+            <p>Herramienta en Batch y PowerShell para análisis de sistema y dispositivos.</p>
+        </div>
+
+        <div class="card">
+            <h3>📂 Sistema Documental Web</h3>
+            <p>Gestión de envío y recepción de documentos PDF por roles.</p>
+        </div>
+
+        <div class="card">
+            <h3>📚 Generador de Exámenes</h3>
+            <p>Aplicación que genera exámenes dinámicos desde archivo Word o Excel.</p>
+        </div>
+
+        <div class="card">
+            <h3>📱 APK Quizzer</h3>
+            <p>Aplicación Android tipo cuestionario con carga desde Excel.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Herramientas Descargables</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>🧹 Limpieza de Temporales</h3>
+            <p>Script automatizado para limpiar archivos temporales y optimizar sistema.</p>
+        </div>
+
+        <div class="card">
+            <h3>🔍 Historial USB</h3>
+            <p>Consulta historial de dispositivos USB conectados en Windows.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Conecta conmigo</h2>
+    <p style="text-align:center;">
+        <a href="https://github.com" class="btn" target="_blank">GitHub</a>
+    </p>
 </section>
 
 <footer>
-© 2026 AnGaPo - Creado por Angel García
+    © 2026 AnGaPo - Desarrollo y Automatización
 </footer>
 
 </body>
