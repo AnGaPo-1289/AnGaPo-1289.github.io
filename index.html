@@ -9,145 +9,126 @@
 body{
     margin:0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#0f0f0f,#1c1c1c);
+    background: linear-gradient(135deg,#0f0f0f,#1a1a1a);
     color:white;
-}
-
-header{
     text-align:center;
-    padding:100px 20px;
 }
 
-header h1{
-    font-size:60px;
+.logo{
+    margin-top:40px;
+}
+
+.logo img{
+    width:180px;
+    border-radius:50%;
+    box-shadow:0 0 25px rgba(0,245,196,0.5);
+}
+
+h1{
+    font-size:50px;
     color:#00f5c4;
-    margin-bottom:10px;
+    margin:20px 0 10px 0;
 }
 
-header p{
-    font-size:20px;
+.descripcion{
     color:#ccc;
-}
-
-.btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:15px 35px;
-    background:#00f5c4;
-    color:black;
-    text-decoration:none;
-    border-radius:8px;
-    font-weight:bold;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:white;
-    transform:scale(1.05);
-}
-
-section{
-    padding:60px 20px;
-    max-width:1000px;
-    margin:auto;
-}
-
-h2{
-    text-align:center;
-    color:#00f5c4;
     margin-bottom:40px;
 }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+.botones{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
     gap:20px;
+    max-width:900px;
+    margin:auto;
 }
 
 .card{
-    background:#1f1f1f;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
     padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,245,196,0.1);
+    width:250px;
+    border-radius:15px;
     transition:0.3s;
+    box-shadow:0 0 15px rgba(0,245,196,0.1);
 }
 
 .card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 0 20px rgba(0,245,196,0.4);
+    transform:translateY(-8px);
+    box-shadow:0 0 25px rgba(0,245,196,0.4);
+}
+
+.card h3{
+    color:#00f5c4;
+}
+
+.card a{
+    display:block;
+    text-decoration:none;
+    color:white;
+    margin:8px 0;
+    transition:0.3s;
+}
+
+.card a:hover{
+    color:#00f5c4;
 }
 
 footer{
-    text-align:center;
+    margin-top:80px;
     padding:30px;
     background:#111;
     color:#aaa;
+    font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1>AnGaPo</h1>
-    <p>Desarrollo de herramientas, automatización y proyectos tecnológicos prácticos.</p>
-    <a href="https://youtube.com" class="btn" target="_blank">Ver Canal de YouTube</a>
-</header>
+<div class="logo">
+    <!-- CAMBIA logo.png por el nombre real de tu logo -->
+    <img src="logo.png" alt="Logo AnGaPo">
+</div>
 
-<section>
-    <h2>Sobre mí</h2>
-    <p>Soy informático apasionado por la automatización, desarrollo de herramientas en Batch, PowerShell y proyectos tecnológicos prácticos. Me enfoco en crear soluciones funcionales y eficientes.</p>
-</section>
+<h1>AnGaPo</h1>
+<p class="descripcion">Desarrollo de herramientas, automatización y proyectos tecnológicos prácticos.</p>
 
-<section>
-    <h2>Proyectos Destacados</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>🔐 Auditoría Windows</h3>
-            <p>Herramienta en Batch y PowerShell para análisis de sistema y dispositivos.</p>
-        </div>
+<div class="botones">
 
-        <div class="card">
-            <h3>📂 Sistema Documental Web</h3>
-            <p>Gestión de envío y recepción de documentos PDF por roles.</p>
-        </div>
-
-        <div class="card">
-            <h3>📚 Generador de Exámenes</h3>
-            <p>Aplicación que genera exámenes dinámicos desde archivo Word o Excel.</p>
-        </div>
-
-        <div class="card">
-            <h3>📱 APK Quizzer</h3>
-            <p>Aplicación Android tipo cuestionario con carga desde Excel.</p>
-        </div>
+    <!-- 1 YouTube -->
+    <div class="card">
+        <h3>🎥 Canal</h3>
+        <a href="https://youtube.com" target="_blank">Ver Canal de YouTube</a>
     </div>
-</section>
 
-<section>
-    <h2>Herramientas Descargables</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>🧹 Limpieza de Temporales</h3>
-            <p>Script automatizado para limpiar archivos temporales y optimizar sistema.</p>
-        </div>
-
-        <div class="card">
-            <h3>🔍 Historial USB</h3>
-            <p>Consulta historial de dispositivos USB conectados en Windows.</p>
-        </div>
+    <!-- 2 Herramientas -->
+    <div class="card">
+        <h3>🛠 Herramientas</h3>
+        <a href="#">Herramienta Forense</a>
+        <a href="#">Borrado de registros</a>
+        <a href="#">Instalador de Fondo de Pantalla</a>
     </div>
-</section>
 
-<section>
-    <h2>Conecta conmigo</h2>
-    <p style="text-align:center;">
-        <a href="https://github.com" class="btn" target="_blank">GitHub</a>
-    </p>
-</section>
+    <!-- 3 Programas -->
+    <div class="card">
+        <h3>💻 Programas</h3>
+        <a href="#">Autoplay Media Studio</a>
+        <a href="#">FastKeys</a>
+    </div>
+
+    <!-- 4 Aplicaciones -->
+    <div class="card">
+        <h3>📱 Aplicaciones</h3>
+        <a href="#">Ascenso Inseguro</a>
+    </div>
+
+</div>
 
 <footer>
-    © 2026 AnGaPo - Desarrollo y Automatización
+    Creado por Ángel García Posadas<br>
+    © 2026 AnGaPo Todos los derechos reservados
 </footer>
 
 </body>
