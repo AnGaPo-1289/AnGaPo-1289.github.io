@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05 - Ley de Disciplina del Ejto., F.A. y G.N.</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:#fff;
+    margin:0;
+}
+.footer{
+    background:#020617;
+    text-align:center;
+    font-size:12px;
+    padding:15px;
+    margin-top:40px;
+    border-top:1px solid #1e293b;
+}
+.footer a{
+    color:#38bdf8;
+    text-decoration:none;
+    font-weight:bold;
+}
+.footer a:hover{
+    text-decoration:underline;
+}
+header{
+    background:#020617;
+    padding:15px;
+    text-align:center;
+    font-weight:bold;
+    font-size:18px;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+.progress-container{
+    width:100%;
+    background:#1e293b;
+    height:6px;
+}
+.progress-bar{
+    height:6px;
+    width:0%;
+    background:#22c55e;
+    transition:width .3s ease;
+}
+.container{
+    padding:18px;
+    padding-bottom:100px;
+}
+.card{
+    background:#1e293b;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+.option{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    background:#334155;
+    border:none;
+    border-radius:8px;
+    color:#fff;
+    font-size:14px;
+}
+.option:disabled{ opacity:.8; }
+.correct{ background:#16a34a !important; }
+.incorrect{ background:#dc2626 !important; }
+.info{
+    background:#1e3a8a;
+    padding:10px;
+    border-radius:10px;
+    font-size:14px;
+    margin-top:10px;
+}
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    font-size:14px;
+}
+.btn-primary{ background:#2563eb; color:#fff; }
+.btn-finish{ background:#22c55e; color:#000; }
+.btn-back{ background:#475569; color:#fff; }
+.hidden{ display:none; }
+.result-box{
+    text-align:center;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+.aprobado{ background:#166534; }
+.regular{ background:#ca8a04; }
+.reprobado{ background:#991b1b; }
+.review{
+    background:#020617;
+    padding:10px;
+    border-radius:8px;
+    margin:8px 0;
+    font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<header id="title">05 - Ley de Disciplina del Ejto., F.A. y G.N.</header>
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="container">
+<div id="quizArea">
+    <button class="btn-finish" onclick="finishExam()">Finalizar examen</button>
+<div class="card" id="questionBox"></div>
+<div id="optionsBox"></div>
+<div class="info">
+✅ Correctas: <span id="ok">0</span><br>
+❌ Incorrectas: <span id="bad">0</span><br>
+⏳ Faltantes: <span id="left">0</span>
+</div>
+<button class="btn-primary hidden" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
+
+</div>
+
+<div id="resultArea" class="hidden">
+<div id="resultBox" class="result-box"></div>
+<div id="review"></div>
+<button class="btn-primary" onclick="repeatIncorrect()">Repetir incorrectas</button>
+<button class="btn-back" onclick="goBack()">⬅ Volver al menú</button>
+</div>
+</div>
+
+<script>
+let quiz = [];
+let current = 0;
+let correct = 0;
+let wrong = 0;
+let answers = [];
+let incorrectList = [];
+
+
+/* ===== BLOQUE 2 - PREGUNTAS ===== */
+quiz = [
+
+{
+art:"Art. 1o",
+q:"Conforme al Artículo 1o., ¿cuál es la finalidad esencial de la Ley de Disciplina Militar?",
+o:[
+"Preservar la disciplina como principio de orden y obediencia que regula la conducta del Ejto., F.A. y G.N.",
+"Regular la conducta operativa del personal en campañas militares",
+"Establecer normas administrativas internas del personal militar",
+"Determinar las atribuciones del mando territorial en tiempos de paz"
+],
+a:0
+},
+{
+art:"Art. 1o Bis",
+q:"De acuerdo con el Artículo 1o Bis, el servicio de las armas implica que el militar:",
+o:[
+"Cumplirá órdenes únicamente dentro de su horario reglamentario",
+"Antepondrá el interés institucional al personal, incluso hasta el sacrificio",
+"Responderá solo ante su superior inmediato",
+"Ejercerá funciones administrativas con autonomía técnica"
+],
+a:1
+},
+{
+art:"Art. 2o",
+q:"El buen comportamiento del militar tiene como propósito jurídico:",
+o:[
+"Facilitar el ascenso por antigüedad",
+"Fortalecer la confianza del pueblo en el Ejto., F.A. y G.N.",
+"Evitar sanciones disciplinarias internas",
+"Incrementar la autoridad del mando territorial"
+],
+a:1
+},
+{
+art:"Art. 3o",
+q:"Según el Artículo 3o., la disciplina militar tiene como bases fundamentales:",
+o:[
+"La jerarquía y la subordinación absoluta",
+"La autoridad operativa y el mando estratégico",
+"La obediencia y un alto concepto del honor, justicia y moral",
+"La antigüedad y la especialidad técnica"
+],
+a:2
+},
+{
+art:"Art. 3o Bis",
+q:"El Artículo 3o Bis establece que la disciplina constituye:",
+o:[
+"Un reglamento administrativo complementario",
+"La base fundamental para defender los intereses de la Patria",
+"Un principio auxiliar del servicio activo",
+"Un mecanismo de control jerárquico interno"
+],
+a:1
+},
+{
+art:"Art. 4o",
+q:"La disciplina exige entre superior y subalterno:",
+o:[
+"Respeto y consideraciones mutuas",
+"Subordinación sin reciprocidad formal",
+"Comunicación exclusivamente escrita",
+"Separación estricta de funciones"
+],
+a:0
+},
+{
+art:"Art. 5o",
+q:"El militar debe proceder en el cumplimiento de sus obligaciones de manera:",
+o:[
+"Flexible según la situación",
+"Discrecional conforme al mando",
+"Legal, justa y enérgica",
+"Reservada ante la tropa"
+],
+a:2
+},
+{
+art:"Art. 6o",
+q:"El uso de armas o fuerza para mantener disciplina procede:",
+o:[
+"En cualquier acto de servicio ordinario",
+"En caso de extrema necesidad durante actos del servicio",
+"Cuando lo autorice autoridad civil",
+"En situaciones administrativas internas"
+],
+a:1
+},
+{
+art:"Art. 7o",
+q:"Conforme al Artículo 7o., la responsabilidad del superior respecto a sus tropas comprende:",
+o:[
+"La conducción exclusiva de actos ceremoniales",
+"La supervisión administrativa de los recursos materiales",
+"El orden de las tropas y el cumplimiento de las obligaciones del servicio sin excusarse en la omisión de subalternos",
+"La delegación absoluta de funciones disciplinarias"
+],
+a:2
+},
+{
+art:"Art. 8o",
+q:"El militar que mande tropas deberá evitar:",
+o:[
+"La propagación de murmuraciones o descontentos que afecten el cumplimiento del servicio",
+"La emisión de órdenes escritas",
+"La manifestación pública de opiniones personales",
+"La evaluación constante del estado moral de la tropa"
+],
+a:0
+},
+{
+art:"Art. 9o",
+q:"Cuando el militar informe al superior sobre el estado de sus tropas, deberá hacerlo:",
+o:[
+"Ante la tropa reunida para mayor transparencia",
+"Con discreción y sin exagerar las circunstancias",
+"Mediante comunicación externa a la institución",
+"Por conducto de autoridad civil competente"
+],
+a:1
+},
+{
+art:"Art. 10",
+q:"Para obtener confianza y estimación de sus superiores, el militar debe demostrar:",
+o:[
+"Antigüedad suficiente en el grado",
+"Capacidad operativa independiente",
+"Aptitud, buena conducta, amor a la carrera y celo en el cumplimiento del deber",
+"Influencia jerárquica en su unidad"
+],
+a:2
+},
+{
+art:"Art. 11",
+q:"El militar, respecto de disposiciones superiores y obligaciones del servicio, deberá:",
+o:[
+"Abstenerse de murmurar sobre ellas",
+"Analizarlas antes de su cumplimiento",
+"Solicitar aclaración pública ante la tropa",
+"Elevar consulta administrativa previa"
+],
+a:0
+},
+{
+art:"Art. 12",
+q:"Se prohíbe al militar:",
+o:[
+"Emitir opiniones técnicas en actos del servicio",
+"Elevar quejas infundadas o hacer públicas falsas imputaciones",
+"Realizar observaciones disciplinarias",
+"Solicitar revisión de órdenes escritas"
+],
+a:1
+},
+{
+art:"Art. 13",
+q:"Cuando una obligación menoscabe su jerarquía militar, el militar tendrá derecho a:",
+o:[
+"Delegar su ejecución a un subalterno",
+"Negarse a cumplirla de inmediato",
+"Elevar representación ante la superioridad",
+"Solicitar intervención civil"
+],
+a:2
+},
+{
+art:"Art. 14",
+q:"Queda estrictamente prohibido al militar:",
+o:[
+"Impartir órdenes verbales",
+"Dar órdenes cuya ejecución constituya delito",
+"Delegar funciones operativas",
+"Supervisar actos disciplinarios"
+],
+a:1
+},
+{
+art:"Art. 15",
+q:"Conforme al Artículo 15, se consideran actos del servicio aquellos:",
+o:[
+"Prescritos por leyes, reglamentos y disposiciones de observancia general dictadas por la Superioridad",
+"Relacionados únicamente con operaciones de combate",
+"Derivados de decisiones administrativas internas",
+"Autorizados por mandos territoriales en campaña"
+],
+a:0
+},
+{
+art:"Art. 16",
+q:"En actos del servicio, el militar:",
+o:[
+"No podrá hacerse representar por apoderado ni elevar peticiones en grupo que contraríen órdenes del servicio",
+"Puede hacerse representar por apoderado con autorización escrita",
+"Podrá delegar funciones disciplinarias",
+"Podrá elevar solicitudes colectivas si media consentimiento del mando"
+],
+a:0
+},
+{
+art:"Art. 17",
+q:"El militar en servicio activo tiene prohibido:",
+o:[
+"Inmiscuirse directa o indirectamente en asuntos políticos, salvo licencia permitida por ley",
+"Ejercer derechos constitucionales básicos",
+"Emitir opiniones técnicas dentro de su unidad",
+"Solicitar información institucional"
+],
+a:0
+},
+{
+art:"Art. 18",
+q:"Conforme al Artículo 18, el militar está obligado a:",
+o:[
+"Saludar únicamente a sus superiores inmediatos",
+"Saludar solo en actos oficiales",
+"Saludar conforme a reglamentos a superiores y de su misma jerarquía, y corresponder el saludo de subalternos",
+"Omitir formalidades fuera de servicio"
+],
+a:2
+},
+{
+art:"Art. 19",
+q:"En acto oficial, cuando se presente un militar de mayor jerarquía:",
+o:[
+"Se mantendrá el orden original del acto",
+"Se suspenderá el acto protocolario",
+"Se le cederá el asiento o lugar preeminente, salvo en Tribunales Militares",
+"Se solicitará autorización escrita para ceder el lugar"
+],
+a:2
+},
+{
+art:"Art. 20",
+q:"El comandante que arribe a una ciudad donde no haya autoridad militar superior deberá:",
+o:[
+"Convocar reunión administrativa inmediata",
+"Esperar instrucciones del mando territorial",
+"Realizar visita de cortesía a autoridades civiles",
+"Limitarse a instalar su unidad"
+],
+a:2
+},
+{
+art:"Art. 21",
+q:"El militar debe comportarse:",
+o:[
+"Con estricta formalidad operativa",
+"Con cortesía y educación acordes a su dignidad y marcialidad institucional",
+"Con reserva absoluta en actos públicos",
+"Con flexibilidad según el contexto civil"
+],
+a:1
+},
+{
+art:"Art. 22",
+q:"La solidaridad y ayuda mutua entre militares tiene como finalidad:",
+o:[
+"Incrementar la subordinación jerárquica",
+"Evitar sanciones disciplinarias",
+"Constituir el espíritu de cuerpo que facilita el cumplimiento de los deberes militares",
+"Fortalecer la estructura administrativa"
+],
+a:2
+},
+{
+art:"Art. 23",
+q:"El militar que porte uniforme deberá abstenerse de:",
+o:[
+"Entrar a centros de vicio o prostitución salvo actos del servicio",
+"Asistir a actos oficiales civiles",
+"Participar en ceremonias públicas",
+"Concurrir a reuniones sociales privadas"
+],
+a:0
+},
+{
+art:"Art. 24",
+q:"El militar rehusará:",
+o:[
+"Órdenes escritas de carácter administrativo",
+"Compromisos que impliquen deshonor o falta de disciplina",
+"Participación en actos protocolarios",
+"Supervisión de actos formativos"
+],
+a:1
+},
+{
+art:"Art. 24 Bis",
+q:"El militar, atendiendo a su honor y principios, debe:",
+o:[
+"Limitar su iniciativa a órdenes expresas",
+"Obrar con equidad y justicia, siendo ejemplo de puntualidad y cumplimiento",
+"Ejercer su autoridad con discrecionalidad plena",
+"Delegar responsabilidades operativas"
+],
+a:1
+},
+{
+art:"Art. 42",
+q:"Cuando un militar no sea atendido por su superior inmediato en una queja fundada, podrá recurrir:",
+o:[
+"Hasta el Presidente de la República, siguiendo rigurosamente la escala jerárquica",
+"Directamente ante autoridad civil competente",
+"Ante el mando territorial sin observar conducto regular",
+"Mediante solicitud colectiva firmada por su unidad"
+],
+a:0
+},
+{
+art:"Art. 43",
+q:"La infracción a las disposiciones de la Ley de Disciplina dará lugar a:",
+o:[
+"Reasignación administrativa inmediata",
+"Correctivo disciplinario o responsabilidad penal conforme al Código de Justicia Militar",
+"Amonestación verbal sin mayores consecuencias",
+"Suspensión automática del servicio"
+],
+a:1
+}
+];
+/* ===== MEZCLAR OPCIONES SIN ROMPER RESPUESTA ===== */
+function shuffleOptions(){
+  quiz.forEach(p=>{
+    const correctText = p.o[p.a];
+    for(let i=p.o.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [p.o[i],p.o[j]]=[p.o[j],p.o[i]];
+    }
+    p.a = p.o.indexOf(correctText);
+  });
+}
+/* ===== MEZCLAR PREGUNTAS ===== */
+function shuffleQuestions(){
+  for(let i=quiz.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [quiz[i],quiz[j]]=[quiz[j],quiz[i]];
+  }
+}
+/* ===== BLOQUE 3 - FUNCIONES ===== */
+function loadQuestion(){
+    let q = quiz[current];
+    document.getElementById("questionBox").innerHTML =
+        "<b>"+(current+1)+". "+q.art+"</b><br><br>"+q.q;
+
+    let optionsBox = document.getElementById("optionsBox");
+    optionsBox.innerHTML = "";
+
+    q.o.forEach((opt,i)=>{
+        let btn = document.createElement("button");
+        btn.className="option";
+        btn.innerText=opt;
+        btn.onclick=()=>answer(i,btn);
+        optionsBox.appendChild(btn);
+    });
+
+    updateInfo();
+    updateProgress();
+}
+
+function answer(i,btn){
+    let q = quiz[current];
+    answers[current]=i;
+    document.querySelectorAll(".option").forEach(b=>b.disabled=true);
+
+    if(i===q.a){
+        btn.classList.add("correct");
+        correct++;
+    }else{
+        btn.classList.add("incorrect");
+        document.querySelectorAll(".option")[q.a].classList.add("correct");
+        wrong++;
+        incorrectList.push(q);
+    }
+
+    document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+    if(current<quiz.length-1){
+        current++;
+        loadQuestion();
+        document.getElementById("nextBtn").classList.add("hidden");
+    }else{
+        finishExam();
+    }
+}
+
+function updateInfo(){
+    document.getElementById("ok").innerText=correct;
+    document.getElementById("bad").innerText=wrong;
+    document.getElementById("left").innerText=quiz.length-(correct+wrong);
+}
+
+function updateProgress(){
+    let pct=((current)/quiz.length)*100;
+    document.getElementById("progressBar").style.width=pct+"%";
+}
+
+/* ===== FINALIZAR ===== */
+function finishExam(){
+
+    let confirmar = confirm("¿Seguro que deseas finalizar el examen?");
+
+    if(confirmar === false){
+        return; // Si presiona Cancelar, no hace nada
+    }
+
+    document.getElementById("quizArea").classList.add("hidden");
+    document.getElementById("resultArea").classList.remove("hidden");
+
+    let total = quiz.length;
+    let pct = Math.round((correct/total)*100);
+    let cal = (pct/10).toFixed(1);
+
+    let box = document.getElementById("resultBox");
+    box.innerHTML = "Calificación: <h1>"+cal+"</h1>Porcentaje: "+pct+"%";
+
+    box.className="result-box";
+    if(cal>=8) box.classList.add("aprobado");
+    else if(cal>=6) box.classList.add("regular");
+    else box.classList.add("reprobado");
+
+    let review="";
+    quiz.forEach((q,i)=>{
+        review+=`<div class="review">
+        <b>${i+1}. ${q.q}</b><br>
+        ✅ Respuesta correcta: ${q.o[q.a]}
+        </div>`;
+    });
+
+    document.getElementById("review").innerHTML=review;
+}
+
+
+function repeatIncorrect(){
+    if(incorrectList.length===0){
+        alert("No hay preguntas incorrectas.");
+        return;
+    }
+    quiz=[...incorrectList];
+    incorrectList=[];
+    current=0;
+    correct=0;
+    wrong=0;
+    answers=[];
+    document.getElementById("resultArea").classList.add("hidden");
+    document.getElementById("quizArea").classList.remove("hidden");
+    shuffleQuestions();
+shuffleOptions();
+loadQuestion();
+}
+
+function goBack(){
+    window.location.href="index.html";
+}
+
+shuffleQuestions();
+shuffleOptions();
+loadQuestion();
+</script>
+
+<div class="footer">
+  Creado por el C. Sgto. 1/o. Inftca. Ángel García Posadas<br>
+  © 2026 AnGaPo<br><br>
+  Dudas y comentarios:
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=angel.seiya1289@gmail.com&su=Dudas%20AnGaPo&body=Hola,%20tengo%20una%20duda%20sobre%20el%20examen." target="_blank">
+    Enviar correo
+  </a>
+</div>
+
+</body>
+</html>

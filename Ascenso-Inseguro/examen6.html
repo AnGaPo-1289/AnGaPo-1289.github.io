@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 - Ley de Ascensos y Recompensas del Ejto., F.A. y G.N.</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:#fff;
+    margin:0;
+}
+.footer{
+    background:#020617;
+    text-align:center;
+    font-size:12px;
+    padding:15px;
+    margin-top:40px;
+    border-top:1px solid #1e293b;
+}
+.footer a{
+    color:#38bdf8;
+    text-decoration:none;
+    font-weight:bold;
+}
+.footer a:hover{
+    text-decoration:underline;
+}
+header{
+    background:#020617;
+    padding:15px;
+    text-align:center;
+    font-weight:bold;
+    font-size:18px;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+.progress-container{
+    width:100%;
+    background:#1e293b;
+    height:6px;
+}
+.progress-bar{
+    height:6px;
+    width:0%;
+    background:#22c55e;
+    transition:width .3s ease;
+}
+.container{
+    padding:18px;
+    padding-bottom:100px;
+}
+.card{
+    background:#1e293b;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+.option{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    background:#334155;
+    border:none;
+    border-radius:8px;
+    color:#fff;
+    font-size:14px;
+}
+.option:disabled{ opacity:.8; }
+.correct{ background:#16a34a !important; }
+.incorrect{ background:#dc2626 !important; }
+.info{
+    background:#1e3a8a;
+    padding:10px;
+    border-radius:10px;
+    font-size:14px;
+    margin-top:10px;
+}
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    font-size:14px;
+}
+.btn-primary{ background:#2563eb; color:#fff; }
+.btn-finish{ background:#22c55e; color:#000; }
+.btn-back{ background:#475569; color:#fff; }
+.hidden{ display:none; }
+.result-box{
+    text-align:center;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+.aprobado{ background:#166534; }
+.regular{ background:#ca8a04; }
+.reprobado{ background:#991b1b; }
+.review{
+    background:#020617;
+    padding:10px;
+    border-radius:8px;
+    margin:8px 0;
+    font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<header id="title">06 - Ley de Ascensos y Recompensas del Ejto., F.A. y G.N.</header>
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="container">
+<div id="quizArea">
+    <br>
+    <button class="btn-finish" onclick="finishExam()">Finalizar examen</button>
+<div class="card" id="questionBox"></div>
+<div id="optionsBox"></div>
+<div class="info">
+✅ Correctas: <span id="ok">0</span><br>
+❌ Incorrectas: <span id="bad">0</span><br>
+⏳ Faltantes: <span id="left">0</span>
+</div>
+<button class="btn-primary hidden" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
+
+</div>
+
+<div id="resultArea" class="hidden">
+<div id="resultBox" class="result-box"></div>
+<div id="review"></div>
+<button class="btn-primary" onclick="repeatIncorrect()">Repetir incorrectas</button>
+<button class="btn-back" onclick="goBack()">⬅ Volver al menú</button>
+</div>
+</div>
+
+<script>
+let quiz = [];
+let current = 0;
+let correct = 0;
+let wrong = 0;
+let answers = [];
+let incorrectList = [];
+
+
+/* ===== BLOQUE 2 - PREGUNTAS ===== */
+quiz = [
+{
+  art: "Art. 2",
+  q: "Es el acto de mando mediante el cual es conferido al militar un grado superior en el orden jerárquico dentro de la escala que fija la Ley Orgánica del Ejército y FA Mexicanos y la Ley de la GN",
+  o: [
+    "Ascenso",
+    "Retiro",
+    "Escala",
+    "Promoción"
+  ],
+  a: 0
+},
+{
+  art: "Art. 3",
+  q: "Es facultad exclusiva de la persona titular de la Presidencia de la República, quien la ejercerá con arreglo a las disposiciones de esta Ley.",
+  o: [
+    "El ascenso del personal de tropa por recompensas",
+    "El ascenso de los Generales",
+    "El ascenso de los Generales, Jefes y Oficiales",
+    "El ascenso de la Planilla del Estado Mayor Conjunto"
+  ],
+  a: 2
+},
+{
+  art: "Art. 4",
+  q: "¿Quienes podrán conferir ascensos de soldados a cabos, los cuales serán comunicados hasta que hayan sido aprobados por la secretaría.",
+  o: [
+    "El secretario y subsecretario de la Defensa",
+    "Los comandantes de regiones y zonas militares",
+    "El secretario de la defensa y oficial mayor",
+    "Los comandantes de las unidades o jefes se dependencias"
+  ],
+  a: 3
+},
+{
+  art: "Art. 4",
+  q: "¿De quién es facultad, ascender a los militares de clase de tropa",
+  o: [
+    "El oficial mayor",
+    "El secretario",
+    "El presidente de la república",
+    "El subsecretario"
+  ],
+  a: 1
+},
+{
+  art: "Art. 9",
+  q: "En tiempo de paz, los ascensos serán conferidos mediante propuesta, previo concurso en cada organismo, para cubrir las plazas de Cabo de las Armas, Servicios o de la GN y las de Sargentos de los servicios o especialidades que carezcan de:",
+  o: [
+    "Curso de Formación",
+    "Especialidad",
+    "Escuela de formación",
+    "Curso básico individual"
+  ],
+  a: 2
+},
+{
+art:"Art. 1",
+q:"¿A qué autoridades corresponde la aplicación de la Ley que regula los ascensos y recompensas del personal militar?",
+o:[
+"A la persona titular de la Presidencia y a la Secretaría de la Defensa Nacional",
+"Al Secretario y al Estado Mayor Conjunto",
+"A la Presidencia y al Senado de la República",
+"A la Secretaría y a los Mandos Territoriales"
+],
+a:0
+},
+{
+art:"Art. 3",
+q:"La facultad para otorgar el ascenso de Generales, Jefes y Oficiales recae:",
+o:[
+"En el Secretario, previa aprobación presidencial",
+"En la persona titular de la Presidencia de la República",
+"En la Comisión de Evaluación de la Promoción Superior",
+"En el EMCDN mediante dictamen"
+],
+a:1
+},
+{
+art:"Art. 4",
+q:"¿Qué autoridad tiene atribución para ascender al personal de Tropa?",
+o:[
+"El Comandante de Unidad con validación posterior",
+"El Secretario",
+"La presidencia de los Estados Unidos Mexicanos",
+"La Presidencia mediante acuerdo directo"
+],
+a:1
+},
+{
+art:"Art. 5",
+q:"Conforme a la Ley, el ascenso de Cabo a Coronel debe conferirse:",
+o:[
+"Atendiendo preferentemente al mérito profesional",
+"Dentro del arma, servicio o de la Guardia Nacional",
+"Por resolución del Secretario según necesidades del servicio",
+"Con base en antigüedad absoluta en el escalafón"
+],
+a:1
+},
+{
+art:"Art. 7",
+q:"En tiempo de paz, los ascensos tienen como propósito fundamental:",
+o:[
+"Regularizar el escalafón conforme a necesidades presupuestales",
+"Cubrir vacantes con militares aptos y preparados para el desempeño del grado inmediato superior",
+"Ocupar las plazas presupuestales con personal que reúna la idoneidad y preparación necesarias para ejercer las funciones del grado inmediato superior.",
+"Proveer las vacantes existentes mediante la designación de militares que acrediten aptitud y capacitación suficientes para asumir las responsabilidades inherentes al grado inmediato superior"
+],
+a:1
+},
+{
+art:"Art. 8",
+q:"El otorgamiento de ascensos en tiempo de paz requiere valorar de manera conjunta:",
+o:[
+"Antigüedad, cursos y recomendación del mando",
+"Tiempo de servicios, Antigüedad en el grado, Buena conducta militar y civil",
+"Mérito excepcional y aprobación en los cursos de formación, y clasificación técnica",
+"Participación en promoción especial y cursos superiores"
+],
+a:1
+},
+{
+art:"Art. 15",
+q:"Los ascensos de Subteniente hasta Teniente Coronel en tiempo de paz se confieren:",
+o:[
+"Mediante promoción superior",
+"Por acuerdo presidencial",
+"A través del concurso de selección",
+"Por antigüedad en el grado inmediato inferior"
+],
+a:2
+},
+{
+art:"Art. 17",
+q:"En igualdad de competencia profesional determinada por las puntuaciones obtenidas, será ascendido el concursante:",
+o:[
+"De mayor antigüedad",
+"Que haya prestado servicios como instructor de cursos",
+"Que haya sido docente o Instructor ",
+"Que tenga mayor edad"
+],
+a:0
+},
+{
+art:"Art. 19",
+q:"Los Subtenientes egresados podrán participar por una sola ocasión para ascender al grado de teniente en una:",
+o:[
+"Promoción General",
+"Promoción Especial",
+"Reclasificación",
+"Promoción Extraordinaria"
+],
+a:1
+},
+{
+art:"Art. 20",
+q:"Para concursar por el ascenso de Mayor a Teniente Coronel se requiere, entre otros requisitos, una antigüedad mínima en el grado de:",
+o:[
+"Dos años",
+"Tres años",
+"Cuatro años",
+"Cinco años"
+],
+a:1
+},
+{
+art:"Art. 26",
+q:"El plazo para representar contra exclusión o no ascenso ante el Secretario es de:",
+o:[
+"Diez días naturales",
+"Quince días posteriores a la notificación",
+"Veinte días hábiles",
+"Quince días siguientes a las fecha de comunicación"
+],
+a:3
+},
+{
+art:"Art. 31",
+q:"Independientemente de los requisitos ordinarios, podrá promoverse al grado inmediato superior al militar que:",
+o:[
+"Obtenga la mayor puntuación en promoción general",
+"Ejecute acto bélico o realice innovación de utilidad relevante",
+"Cumpla más de veinte años de servicio",
+"Sean autores de un invento o innovación de verdadera utilidad y de gran importancia"
+],
+a:3
+},
+{
+art:"Art. 34",
+q:"Uno de los requisitos mínimos para participar en la Promoción Superior es contar como mínimo a la la fecha de ascenso con:",
+o:[
+"Tres años de antigüedad en el grado",
+"Cinco años de antigüedad en el grado",
+"Cuatro años de antigüedad en el grado",
+"Seis años de antigüedad en el grado"
+],
+a:2
+},
+{
+art:"Art. 35",
+q:"No serán conferidos ascensos a quienes se encuentren:",
+o:[
+"En comisión en el extranjero o con licencia ilimitada",
+"Con licencia ilimitada, especial o por edad límite",
+"En funciones de docentes e instructores",
+"Asignados a Estados Mayores o a la Oficialía"
+],
+a:1
+},
+{
+art:"Art. 41",
+q:"Las patentes correspondientes de Mayor a General de División deberán llevar la firma de:",
+o:[
+"El Secretario y el Oficial Mayor",
+"El Presidente y el Inspector",
+"El Presidente y el Secretario",
+"El Secretario y Subsecretario"
+],
+a:2
+},
+{
+art:"Art. 44",
+q:"Si dos o mas militares del mismo grado o de la misma arma o servicio, tienen nombramiento o patente con igual fecha, se considerará más antiguo:",
+o:[
+"El que haya servido mayor tiempo en el grado anterior",
+"El de mayor edad",
+"El que tenga más cursos en el extranjero",
+"El que pertenezca al arma y no al servicio"
+],
+a:0
+},
+{
+art:"Art. 46",
+q:"En tiempo de guerra, los ascensos podrán otorgarse para:",
+o:[
+"Cubrir vacantes en todas la Unidades Dependencias e Instalaciones",
+"Intimidar al enemigo en el ataque",
+"Que personal en caso de ser herido pueda retirarse con el grado inmediato",
+"Premiar actos de valor o cubrir vacantes por necesidades de la situación"
+],
+a:3
+},
+{
+art:"Art. 50",
+q:"Con el fin de premiar a los militares, por su heroísmo, capacidad profesional, servicios a la patria y demás hechos meritorios, se establecerán las siguientes recompensas:",
+o:[
+"Condecoraciones, menciones honoríficas, distinciones y citaciones",
+"Condecoraciones, ascensos y premios económicos",
+"Menciones honoríficas, promociones especiales y citaciones",
+"Distinciones, reconocimientos y ascenso al grado inmediato"
+],
+a:0
+},
+{
+art:"Art. 54",
+q:"La Condecoración al Valor Heroico se otorga a quienes:",
+o:[
+"Cumplan trayectoria ejemplar en el activo",
+"Obtengan méritos docentes destacados",
+"Participen en campañas internacionales",
+"Realicen actos de heroísmo excepcional con riesgo de su vida"
+],
+a:3
+},
+{
+art:"Art. 60",
+q:"La Condecoración de Perseverancia reconoce:",
+o:[
+"Servicios distinguidos en mando operativo",
+"Servicios ininterrumpidos en el activo",
+"Actos relevantes en campaña",
+"Participación en cursos superiores"
+],
+a:1
+},
+
+{
+art:"Art. 20",
+q:"Para participar en los concursos de selección para el ascenso de Mayor a Teniente Coronel, ¿Cual es el mínimo de tiempo de servicio con que deben contar?",
+o:[
+"15 años",
+"16 años",
+"14 años",
+"18 años"
+],
+a:1
+},
+
+{
+art:"Art. 20",
+q:"Para participar en los concursos de selección para el ascenso de Mayor a Teniente Coronel, ¿Cual es el mínimo de años de antigüedad en el grado con que deben de contar?",
+o:[
+"1 años",
+"5 años",
+"2 años",
+"3 años"
+],
+a:3
+},
+
+{
+art:"Art. 54",
+q:"Tiene por objeto premiar a los militares que, en tiempo de guerra o de paz, ejecuten actos de heroísmo excepcional con riesgo de su vida, calificados por el Presidente a propuesta del Secretario",
+o:[
+"La Condecoración al mérito militar",
+"La Condecoración al mérito docente",
+"La Condecoración al metió técnico",
+"La Condecoración al valor heróico"
+],
+a:3
+},
+{
+art:"Art. 55",
+q:"Se otorgará por disposición de Presidencia, a propuesta del Secretario, a militares o civiles, nacionales o extranjeros, por actos de revelancia excepcional que realicen en beneficio de las Fuerzas Armadas del País.",
+o:[
+"La Condecoración al valor heróico",
+"La Condecoración al mérito técnico",
+"La Condecoración al mérito militar",
+"La Condecoración al mérito facultativo"
+],
+a:2
+},
+
+{
+art:"Art. 60",
+q:"Premiará los servicios ininterrumpidos en el activo, a los miembros del Ejército Fuerza Aérea y Guardia Nacional",
+o:[
+"La Condecoración al mérito militar",
+"La Condecoración al mérito facultativo",
+"La Condecoración al valor heróico",
+"La Condecoración de perseverancia"
+],
+a:3
+},
+
+{
+art:"Art. 57",
+q:"Premiará a los alumnos de las Escuelas Superiores que hayan realizado en forma brillante sus estudios militares, obteniendo en todos los años primeros o segundos premios",
+o:[
+"La Condecoración al mérito facultativo",
+"La Condecoración al mérito docente",
+"La Condecoración al mérito militar",
+"La Condecoración al mérito técnico"
+],
+a:0
+},
+
+{
+art:"Art. 59",
+q:"Se otorgará por el Presidente, a propuesta del Secretario, a los militares o civiles que en cumplimiento de su deber, realicen actos de notoria trascendencia en dicha actividad.",
+o:[
+"La Condecoración al mérito técnico",
+"La Condecoración al mérito militar",
+"La Condecoración al mérito en la campaña contra el narcotráfico",
+"La Condecoración al valor heróico"
+],
+a:2
+},
+
+{
+art:"Art. 56",
+q:"Se otorgará a quienes sean autores de un invento de verdadera utilidad para la defensa de la Nación o de positivo beneficio para el Ejército, Fuerza Aérea o Guardia Nacional.",
+o:[
+"Condecoración al mérito técnico, primera clase",
+"Condecoración al mérito técnico, segunda clase",
+"Condecoración al mérito técnico, tercera clase",
+"Condecoración al mérito técnico, cuarta clase"
+],
+a:0
+},
+
+{
+art:"Art. 56",
+q:"Se conferirá a quienes inicien reformas o métodos de instrucción o de defensa, que impliquen un progreso real para el Ejército, Fuerza Aérea y Guardia Nacional.",
+o:[
+"Condecoración al mérito técnico, cuarta clase",
+"Condecoración al mérito técnico, primera clase",
+"Condecoración al mérito técnico, segunda clase",
+"Condecoración al mérito técnico, tercera clase"
+],
+a:2
+},
+
+{
+art:"Art. 56",
+q:"Se otorgará al personal militar o civil, nacional o extranjero que contribuya en los proyectos de edición bibliográfica en beneficio del Ejército, Fuerza Aérea y Guardia Nacional.",
+o:[
+"Condecoración al mérito técnico, tercera clase",
+"Condecoración al mérito técnico, segunda clase",
+"Condecoración al mérito técnico, cuarta clase",
+"Condecoración al mérito técnico, primera clase"
+],
+a:0
+},
+
+{
+art:"Art. 62",
+q:"Se otorgará por la Secretaría al personal del Ejército, Fuerza Aérea y Guardia Nacional, que cumpla más de 45 años de servicios efectivos.",
+o:[
+"La condecoración al mérito militar",
+"La condecoración de perseverancia",
+"La condecoración por la patria",
+"La condecoración de retiro"
+],
+a:3
+}
+];
+/* ===== MEZCLAR OPCIONES SIN ROMPER RESPUESTA ===== */
+function shuffleOptions(){
+  quiz.forEach(p=>{
+    const correctText = p.o[p.a];
+    for(let i=p.o.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [p.o[i],p.o[j]]=[p.o[j],p.o[i]];
+    }
+    p.a = p.o.indexOf(correctText);
+  });
+}    
+/* ===== MEZCLAR PREGUNTAS ===== */
+function shuffleQuestions(){
+  for(let i=quiz.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [quiz[i],quiz[j]]=[quiz[j],quiz[i]];
+  }
+}    
+/* ===== BLOQUE 3 - FUNCIONES ===== */
+function loadQuestion(){
+    let q = quiz[current];
+    document.getElementById("questionBox").innerHTML =
+        "<b>"+(current+1)+". "+q.art+"</b><br><br>"+q.q;
+
+    let optionsBox = document.getElementById("optionsBox");
+    optionsBox.innerHTML = "";
+
+    q.o.forEach((opt,i)=>{
+        let btn = document.createElement("button");
+        btn.className="option";
+        btn.innerText=opt;
+        btn.onclick=()=>answer(i,btn);
+        optionsBox.appendChild(btn);
+    });
+
+    updateInfo();
+    updateProgress();
+}
+
+function answer(i,btn){
+    let q = quiz[current];
+    answers[current]=i;
+    document.querySelectorAll(".option").forEach(b=>b.disabled=true);
+
+    if(i===q.a){
+        btn.classList.add("correct");
+        correct++;
+    }else{
+        btn.classList.add("incorrect");
+        document.querySelectorAll(".option")[q.a].classList.add("correct");
+        wrong++;
+        incorrectList.push(q);
+    }
+
+    document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+function nextQuestion(){
+    if(current<quiz.length-1){
+        current++;
+        loadQuestion();
+        document.getElementById("nextBtn").classList.add("hidden");
+    }else{
+        finishExam();
+    }
+}
+
+function updateInfo(){
+    document.getElementById("ok").innerText=correct;
+    document.getElementById("bad").innerText=wrong;
+    document.getElementById("left").innerText=quiz.length-(correct+wrong);
+}
+
+function updateProgress(){
+    let pct=((current)/quiz.length)*100;
+    document.getElementById("progressBar").style.width=pct+"%";
+}
+
+/* ===== FINALIZAR ===== */
+function finishExam(){
+
+    let confirmar = confirm("¿Seguro que deseas finalizar el examen?");
+
+    if(confirmar === false){
+        return; // Si presiona Cancelar, no hace nada
+    }
+
+    document.getElementById("quizArea").classList.add("hidden");
+    document.getElementById("resultArea").classList.remove("hidden");
+
+    let total = quiz.length;
+    let pct = Math.round((correct/total)*100);
+    let cal = (pct/10).toFixed(1);
+
+    let box = document.getElementById("resultBox");
+    box.innerHTML = "Calificación: <h1>"+cal+"</h1>Porcentaje: "+pct+"%";
+
+    box.className="result-box";
+    if(cal>=8) box.classList.add("aprobado");
+    else if(cal>=6) box.classList.add("regular");
+    else box.classList.add("reprobado");
+
+    let review="";
+    quiz.forEach((q,i)=>{
+        review+=`<div class="review">
+        <b>${i+1}. ${q.q}</b><br>
+        ✅ Respuesta correcta: ${q.o[q.a]}
+        </div>`;
+    });
+
+    document.getElementById("review").innerHTML=review;
+}
+function repeatIncorrect(){
+    if(incorrectList.length===0){
+        alert("No hay preguntas incorrectas.");
+        return;
+    }
+    quiz=[...incorrectList];
+    incorrectList=[];
+    current=0;
+    correct=0;
+    wrong=0;
+    answers=[];
+    document.getElementById("resultArea").classList.add("hidden");
+    document.getElementById("quizArea").classList.remove("hidden");
+    shuffleQuestions();
+shuffleOptions();
+loadQuestion();
+}
+
+function goBack(){
+    window.location.href="index.html";
+}
+
+shuffleQuestions();
+shuffleOptions();
+loadQuestion();
+</script>
+
+<div class="footer">
+  Creado por el C. Sgto. 1/o. Inftca. Ángel García Posadas<br>
+  © 2026 AnGaPo<br><br>
+  Dudas y comentarios:
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=angel.seiya1289@gmail.com&su=Dudas%20AnGaPo&body=Hola,%20tengo%20una%20duda%20sobre%20el%20examen." target="_blank">
+    Enviar correo
+  </a>
+</div>
+
+</body>
+</html>

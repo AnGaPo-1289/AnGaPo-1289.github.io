@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04 - Ley del ISSFAM</title>
+
+<style>
+body{font-family:Arial,sans-serif;background:#0f172a;color:#fff;margin:0;}
+header{background:#020617;padding:15px;text-align:center;font-weight:bold;font-size:18px;position:sticky;top:0;}
+.progress-container{width:100%;background:#1e293b;height:6px;}
+.progress-bar{height:6px;width:0%;background:#22c55e;transition:.3s;}
+.container{padding:18px;padding-bottom:100px;}
+.card{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:15px;}
+.option{display:block;width:100%;padding:12px;margin:8px 0;background:#334155;border:none;border-radius:8px;color:#fff;font-size:14px;}
+.correct{background:#16a34a!important;}
+.incorrect{background:#dc2626!important;}
+.info{background:#1e3a8a;padding:10px;border-radius:10px;font-size:14px;}
+button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;font-size:14px;}
+.btn-primary{background:#2563eb;color:#fff;}
+.btn-finish{background:#22c55e;color:#000;}
+.btn-back{background:#475569;color:#fff;}
+.hidden{display:none;}
+.result-box{text-align:center;padding:20px;border-radius:12px;margin-bottom:15px;}
+.aprobado{background:#166534;}
+.regular{background:#ca8a04;}
+.reprobado{background:#991b1b;}
+.review{background:#020617;padding:10px;border-radius:8px;margin:8px 0;font-size:13px;}
+.footer{background:#020617;text-align:center;font-size:12px;padding:15px;margin-top:40px;border-top:1px solid #1e293b;}
+.footer a{color:#38bdf8;text-decoration:none;font-weight:bold;}
+</style>
+</head>
+
+<body>
+
+<header>04 - Ley del ISSFAM</header>
+<div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="container">
+
+<div id="quizArea">
+  <button class="btn-finish" onclick="finishExam()">Finalizar examen</button>
+<div class="card" id="questionBox"></div>
+<div id="optionsBox"></div>
+
+<div class="info">
+✅ Correctas: <span id="ok">0</span><br>
+❌ Incorrectas: <span id="bad">0</span><br>
+⏳ Faltantes: <span id="left">0</span>
+</div>
+
+<button class="btn-primary hidden" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
+
+</div>
+
+<div id="resultArea" class="hidden">
+<div id="resultBox" class="result-box"></div>
+<div id="review"></div>
+<button class="btn-primary" onclick="repeatIncorrect()">Repetir incorrectas</button>
+<button class="btn-back" onclick="goBack()">⬅ Volver al menú</button>
+</div>
+
+</div>
+<script>
+let quiz = [];
+let current=0,correct=0,wrong=0,answers=[],incorrectList=[];
+
+/* ===== PREGUNTAS COMPLETAS ===== */
+quiz = [
+{
+  art: "Art. 21",
+  q: "Es la prestación económica vitalicia a que tienen derecho los militares retirados.",
+  o: ["Pensión otorgada a familiares derechohabientes","Compensación pagada en una sola exhibición","Haber de retiro conforme a la Ley","Seguro colectivo por retiro voluntario"],
+  a: 2
+},
+{
+  art: "Art. 19",
+  q: "Las Secretarías de la Defensa y de Marina tramitarán ante el Instituto:",
+  o: ["La afiliación del personal en activo y retiro","Las promociones del personal militar","Las licencias ordinarias del servicio","Las comisiones fuera del país"],
+  a: 0
+},
+{
+  art: "Art. 30",
+  q: "Los militares retirados podrán volver al activo cuando:",
+  o: ["Lo soliciten mediante conducto regular","Exista vacante en su jerarquía","Cumplan determinado tiempo en retiro","Las necesidades de la Nación lo exijan"],
+  a: 3
+},
+{
+  art: "Art. 23",
+  q: "La cuantía del haber de retiro y de la pensión:",
+  o: ["Permanece fija durante el retiro","Se incrementará conforme aumenten los haberes del activo","Se revisa mediante acuerdo administrativo","Depende de la disponibilidad presupuestal"],
+  a: 1
+},
+{
+  art: "Art. 21",
+  q: "Es la prestación económica a que tienen derecho los militares y sus familiares en una sola exhibición.",
+  o: ["Pensión derivada del servicio activo","Haber de retiro por antigüedad","Seguro institucional de retiro","Compensación conforme a la Ley"],
+  a: 3
+},
+{
+  art: "Art. 24",
+  q: "Es causa de retiro:",
+  o: ["Llegar a la edad límite que fija la Ley","Cambio definitivo de adscripción","Asignación temporal de servicio","Licencia ordinaria autorizada"],
+  a: 0
+},
+{
+  art: "Art. 20",
+  q: "El Instituto expedirá a los beneficiarios una:",
+  o: ["Constancia administrativa de derechos","Credencial para servicios médicos","Cédula de Identificación correspondiente","Autorización temporal de afiliación"],
+  a: 2
+},
+{
+  art: "Art. 25",
+  q: "La edad límite para permanecer en el activo depende de:",
+  o: ["El tiempo total en el servicio","La jerarquía del militar","La unidad de adscripción","La especialidad desempeñada"],
+  a: 1
+},
+{
+  art: "Art. 32",
+  q: "Los haberes de retiro, compensaciones y pensiones:",
+  o: ["Podrán transferirse entre beneficiarios","Se otorgan de forma temporal","Quedan exentos de todo impuesto","Se determinan por acuerdo interno"],
+  a: 2
+},
+{
+  art: "Art. 51",
+  q: "Los derechos a percibir beneficios de retiro se pierden por:",
+  o: ["Cambio de situación administrativa","Licencia ilimitada del servicio","Actualización de datos personales","Sentencia ejecutoriada que origine la pérdida del beneficio"],
+  a: 3
+},
+{
+  art: "Art. 21",
+  q: "Es la facultad que tiene el Estado para separar del activo a los militares.",
+  o: ["Retiro conforme a la legislación militar","Haber de retiro por antigüedad","Compensación derivada del servicio","Pensión otorgada a familiares"],
+  a: 0
+},
+{
+  art: "Art. 41",
+  q: "Si hubiere varios familiares con derecho a pensión:",
+  o: ["Se asigna al familiar de mayor edad","Se divide por partes iguales entre ellos","El Instituto determina porcentajes","Se otorga únicamente al cónyuge"],
+  a: 1
+},
+{
+  art: "Art. 27",
+  q: "Los militares que pasen a situación de retiro ascenderán:",
+  o: ["Al grado superior permanente","Dos grados jerárquicos","Al grado inmediato únicamente para ese fin","Solo en caso de guerra"],
+  a: 2
+},
+{
+  art: "Art. 55",
+  q: "Los Generales, Jefes y Oficiales tendrán derecho por gastos de sepelio a:",
+  o: ["Diez días de haber correspondiente","Quince días de haber o retiro","Cuarenta días de haber integrado","Veinte días de haber o haber de retiro"],
+  a: 3
+},
+{
+  art: "Art. 24",
+  q: "También es causa de retiro:",
+  o: ["Quedar incapacitado en acción de armas","Cambio temporal de unidad","Licencia ordinaria autorizada","Permiso especial administrativo"],
+  a: 0
+},
+{
+  art: "Art. 29",
+  q: "Los militares retirados y pensionistas tendrán obligación de:",
+  o: ["Actualizar su grado militar","Pasar revista de supervivencia","Solicitar revisión médica periódica","Presentar informe anual"],
+  a: 1
+},
+{
+  art: "Art. 36",
+  q: "Tienen derecho a compensación los militares que tengan:",
+  o: ["Menos de cinco años de servicios","Más de veinticinco años efectivos","Cinco o más años sin llegar a veinte","Veinte años completos de servicio"],
+  a: 2
+},
+{
+  art: "Art. 31",
+  q: "El haber de retiro, pensión o compensación se calcularán con base en:",
+  o: ["Resolución administrativa del Instituto","Solicitud directa del militar","Acuerdo presidencial correspondiente","Tabuladores autorizados por la SHCP"],
+  a: 3
+},
+{
+  art: "Art. 18",
+  q: "Las prestaciones que se otorgarán con arreglo a esta Ley incluyen:",
+  o: ["Haber de retiro conforme a disposiciones legales","Contrato especial de servicios militares","Pago extraordinario por comisiones","Bonificación administrativa especial"],
+  a: 0
+},
+{
+  art: "Art. 48",
+  q: "El derecho para recibir haber de retiro o compensación se origina por:",
+  o: ["Solicitud presentada por el militar","Resolución definitiva del Instituto","Orden emitida por el mando","Dictamen médico administrativo"],
+  a: 1
+},
+{
+  art: "Art. 40",
+  q: "Los familiares del militar muerto en actos del servicio tienen derecho a:",
+  o: ["Compensación económica extraordinaria","Pago único por servicios prestados","Pensión equivalente al 100% del haber","Servicio médico institucional"],
+  a: 2
+},
+{
+  art: "Art. 57",
+  q: "La ayuda para gastos de sepelio se cubrirá por:",
+  o: ["La unidad militar correspondiente","Los familiares del militar fallecido","El mando territorial asignado","La Unidad Ejecutora de Pago o el Instituto"],
+  a: 3
+},
+{
+  art: "Art. 23",
+  q: "Los haberes de retiro, compensaciones y pensiones se cubrirán con cargo al:",
+  o: ["Erario federal conforme al presupuesto","Presupuesto estatal correspondiente","Fondo militar administrativo","Instituto de seguridad privada"],
+  a: 0
+},
+{
+  art: "Art. 19",
+  q: "Es obligación del militar:",
+  o: ["Solicitar ascenso por antigüedad","Mantener actualizada la afiliación y designación de beneficiarios","Autorizar pagos administrativos","Asignar beneficiarios institucionales"],
+  a: 1
+},
+{
+  art: "Art. 39",
+  q: "Los familiares mencionados en cada fracción:",
+  o: ["Se suman automáticamente en la pensión","Reciben igual porcentaje en todos los casos","Excluyen a los comprendidos en las siguientes","Determinan el reparto entre ellos"],
+  a: 2
+},
+{
+  art: "Art. 52",
+  q: "Los derechos a pensión se pierden cuando el cónyuge supérstite:",
+  o: ["Cambie de domicilio legal","Modifique su situación administrativa","Solicite revisión del beneficio","Contraiga matrimonio o viva en concubinato"],
+  a: 3
+},
+{
+  art: "Art. 45",
+  q: "Las pensiones fijadas en esta Ley serán pagadas:",
+  o: ["A partir del día siguiente de la muerte del militar","Al mes siguiente de la resolución","Después del trámite administrativo","Cuando lo autorice la autoridad fiscal"],
+  a: 0
+},
+{
+  art: "Art. 31",
+  q: "Para integrar el haber de retiro se tomará como base:",
+  o: ["El sueldo mínimo vigente","El haber del grado con que vayan a ser retirados","El promedio de percepciones","La antigüedad acumulada"],
+  a: 1
+},
+{
+  art: "Art. 38",
+  q: "Se consideran familiares del militar:",
+  o: ["Únicamente los hijos menores","Solo el cónyuge legal","La viuda o viudo solos o con los hijos","Los ascendientes directos"],
+  a: 2
+},
+{
+  art: "Art. 49",
+  q: "El derecho para percibir pensión de familiares se origina por:",
+  o: ["Solicitud presentada por familiares","Orden emitida por autoridad militar","Dictamen médico correspondiente","Resolución definitiva del Instituto sancionada por la SHCP"],
+  a: 3
+},
+{
+  art: "Art. 33",
+  q: "Tienen derecho al 100% del haber para efectos de retiro:",
+  o: ["Los militares incapacitados en acción de armas","Todo el personal retirado","Solo personal de mando","Personal con antigüedad mayor"],
+  a: 0
+},
+{
+  art: "Art. 50",
+  q: "La baja en las Fuerzas Armadas, salvo excepciones:",
+  o: ["Suspende temporalmente derechos","Extingue todo derecho a reclamar haber de retiro, compensación o pensión","Mantiene beneficios adquiridos","Solo afecta prestaciones médicas"],
+  a: 1
+},
+{
+  art: "Art. 36",
+  q: "La compensación se cubrirá:",
+  o: ["En pagos mensuales sucesivos","En forma anual acumulada","En una sola exhibición","En parcialidades autorizadas"],
+  a: 2
+},
+{
+  art: "Art. 31",
+  q: "Los haberes de retiro solo podrán reducirse por:",
+  o: ["Multas administrativas impuestas","Decisión del mando correspondiente","Solicitudes personales del militar","Adeudos contraídos con el Instituto o resolución judicial"],
+  a: 3
+},
+{
+  art: "Art. 55",
+  q: "Quien acredite haber realizado los gastos de sepelio tendrá derecho a:",
+  o: ["El equivalente a cuatro meses del haber","Un pago simbólico administrativo","Apoyo funerario institucional","Pago equivalente a un mes"],
+  a: 0
+},
+{
+  art: "Art. 23",
+  q: "La cuantía del haber de retiro y pensión aumentará:",
+  o: ["Cada ejercicio fiscal","En igual proporción que aumenten los haberes del activo","Mediante decreto presidencial","Por solicitud del beneficiario"],
+  a: 1
+},
+{
+  art: "Art. 22",
+  q: "Tienen derecho a las prestaciones del capítulo de retiro:",
+  o: ["Solo militares en activo","Solo personal retirado","Militares y familiares en los casos especificados","Únicamente oficiales superiores"],
+  a: 2
+},
+{
+  art: "Art. 31",
+  q: "La pensión por fallecimiento fuera de actos del servicio se integrará conforme a:",
+  o: ["Artículo 18 de la Ley","Artículo 22 correspondiente","Artículo 25 aplicable","Artículo 31 de la Ley"],
+  a: 3
+}
+];
+/* ===== MEZCLAR OPCIONES SIN ROMPER RESPUESTA ===== */
+function shuffleOptions(){
+  quiz.forEach(p=>{
+    const correctText = p.o[p.a];
+    for(let i=p.o.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [p.o[i],p.o[j]]=[p.o[j],p.o[i]];
+    }
+    p.a = p.o.indexOf(correctText);
+  });
+}
+
+/* ===== MEZCLAR PREGUNTAS ===== */
+function shuffleQuestions(){
+  for(let i=quiz.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [quiz[i],quiz[j]]=[quiz[j],quiz[i]];
+  }
+}
+
+/* ===== CARGAR PREGUNTA ===== */
+function loadQuestion(){
+  let q = quiz[current];
+
+  document.getElementById("questionBox").innerHTML =
+    "<b>"+(current+1)+". "+q.art+"</b><br><br>"+q.q;
+
+  let box = document.getElementById("optionsBox");
+  box.innerHTML="";
+
+  q.o.forEach((opt,i)=>{
+    let btn=document.createElement("button");
+    btn.className="option";
+    btn.innerText=opt;
+    btn.onclick=()=>answer(i,btn);
+    box.appendChild(btn);
+  });
+
+  updateInfo();
+  updateProgress();
+}
+
+/* ===== RESPUESTA ===== */
+function answer(i,btn){
+  let q=quiz[current];
+  answers[current]=i;
+
+  document.querySelectorAll(".option").forEach(b=>b.disabled=true);
+
+  if(i===q.a){
+    btn.classList.add("correct");
+    correct++;
+  }else{
+    btn.classList.add("incorrect");
+    document.querySelectorAll(".option")[q.a].classList.add("correct");
+    wrong++;
+    incorrectList.push(q);
+  }
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+/* ===== SIGUIENTE ===== */
+function nextQuestion(){
+  if(current<quiz.length-1){
+    current++;
+    document.getElementById("nextBtn").classList.add("hidden");
+    loadQuestion();
+  }else{
+    finishExam();
+  }
+}
+
+/* ===== ACTUALIZAR CONTADORES ===== */
+function updateInfo(){
+  document.getElementById("ok").innerText=correct;
+  document.getElementById("bad").innerText=wrong;
+  document.getElementById("left").innerText=quiz.length-(correct+wrong);
+}
+
+/* ===== BARRA DE PROGRESO ===== */
+function updateProgress(){
+  let pct=((current)/quiz.length)*100;
+  document.getElementById("progressBar").style.width=pct+"%";
+}
+
+/* ===== FINALIZAR ===== */
+function finishExam(){
+
+    let confirmar = confirm("¿Seguro que deseas finalizar el examen?");
+
+    if(confirmar === false){
+        return; // Si presiona Cancelar, no hace nada
+    }
+
+    document.getElementById("quizArea").classList.add("hidden");
+    document.getElementById("resultArea").classList.remove("hidden");
+
+    let total = quiz.length;
+    let pct = Math.round((correct/total)*100);
+    let cal = (pct/10).toFixed(1);
+
+    let box = document.getElementById("resultBox");
+    box.innerHTML = "Calificación: <h1>"+cal+"</h1>Porcentaje: "+pct+"%";
+
+    box.className="result-box";
+    if(cal>=8) box.classList.add("aprobado");
+    else if(cal>=6) box.classList.add("regular");
+    else box.classList.add("reprobado");
+
+    let review="";
+    quiz.forEach((q,i)=>{
+        review+=`<div class="review">
+        <b>${i+1}. ${q.q}</b><br>
+        ✅ Respuesta correcta: ${q.o[q.a]}
+        </div>`;
+    });
+
+    document.getElementById("review").innerHTML=review;
+}
+
+  
+/* ===== REPETIR INCORRECTAS ===== */
+function repeatIncorrect(){
+  if(incorrectList.length===0){
+    alert("No hay preguntas incorrectas.");
+    return;
+  }
+
+  quiz=[...incorrectList];
+  incorrectList=[];
+  current=0;
+  correct=0;
+  wrong=0;
+  answers=[];
+
+  document.getElementById("resultArea").classList.add("hidden");
+  document.getElementById("quizArea").classList.remove("hidden");
+
+  shuffleQuestions();
+  shuffleOptions();
+  loadQuestion();
+}
+
+/* ===== VOLVER AL MENÚ ===== */
+function goBack(){
+  window.location.href="index.html";
+}
+
+/* ===== INICIALIZAR ===== */
+shuffleQuestions();
+shuffleOptions();
+loadQuestion();
+
+</script>
+
+<div class="footer">
+Creado por el C. Sgto. 1/o. Inftca. Ángel García Posadas<br>
+© 2026 AnGaPo<br><br>
+Dudas y comentarios:
+<a href="mailto:TU_CORREO@gmail.com?subject=Dudas%20AnGaPo%20-%20ISSFAM&body=Hola,%20tengo%20una%20duda%20sobre%20el%20examen%2004.">
+Enviar correo
+</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>AnGaPo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:#fff;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+}
+
+header{
+    background:#020617;
+    padding:16px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:1px;
+    box-shadow:0 4px 12px rgba(0,0,0,.6);
+}
+
+.container{
+    padding:25px;
+    flex:1;
+}
+
+#menu{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:25px;
+    margin-top:20px;
+}
+
+/* ===== LIBRO ===== */
+.card{
+    perspective:1000px;
+    text-decoration:none;
+}
+
+.book{
+    position:relative;
+    width:100%;
+    aspect-ratio: 2 / 3; /* proporción real de libro */
+    transform-style:preserve-3d;
+    transition:transform .4s ease;
+}
+
+.book:hover{
+    transform:rotateY(-8deg) scale(1.05);
+}
+
+.book img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:6px;
+    box-shadow:
+        -8px 0 15px rgba(0,0,0,.7),
+        0 15px 25px rgba(0,0,0,.6);
+}
+
+/* Lomo */
+.book::before{
+    content:"";
+    position:absolute;
+    left:-6px;
+    top:0;
+    width:6px;
+    height:100%;
+    background:linear-gradient(to right,#111,#333);
+    border-radius:4px 0 0 4px;
+}
+
+/* Título debajo */
+.card-title{
+    margin-top:10px;
+    font-size:14px;
+    text-align:center;
+    font-weight:bold;
+    color:#e2e8f0;
+}
+
+/* Footer */
+footer{
+    background:#020617;
+    text-align:center;
+    font-size:12px;
+    padding:15px;
+    border-top:1px solid #1e293b;
+}
+</style>
+</head>
+
+<body>
+
+<header>Examen AnGaPo V3.2026</header>
+
+<div class="container">
+
+<div id="menu">
+
+<a href="examen1.html" class="card">
+    <div class="book">
+        <img src="portadas/1cjm.jpg" onerror="this.src='portadas/default.jpg'">
+    </div>
+    <div class="card-title">01 - Código de Justicia Militar</div>
+</a>
+
+<a href="examen2.html" class="card">
+    <div class="book">
+        <img src="portadas/2lfafe.jpg" onerror="this.src='portadas/default.jpg'">
+    </div>
+    <div class="card-title">02 - Ley Federal de Armas de Fuego y Explosivos</div>
+</a>
+
+<a href="examen3.html" class="card">
+    <div class="book">
+        <img src="portadas/3loefam.jpg" onerror="this.src='portadas/default.jpg'">
+    </div>
+    <div class="card-title">03 - Ley Orgánica del Ejército y F.A.M.</div>
+</a>
+
+<a href="examen4.html" class="card">
+    <div class="book">
+        <img src="portadas/4lissfam.jpg" onerror="this.src='portadas/default.jpg'">
+    </div>
+    <div class="card-title">04 - Ley del ISSFAM</div>
+</a>
+
+<a href="examen5.html" class="card">
+    <div class="book">
+        <img src="portadas/5ldefamygn.jpg" onerror="this.src='portadas/default.jpg'">
+    </div>
+    <div class="card-title">05 - Ley de Disciplina del Ejto., F.A.M. y G.N.</div>
+</a>
+<a href="examen6.html" class="card">
+    <div class="book">
+        <img src="portadas/default.jpg" onerror="this.src='portadas/default.jpg'">
+    </div>
+    <div class="card-title">05 - Ley de Ascensos y Recompensas del Ejto., F.A.M. y G.N.</div>
+</a>
+
+</div>
+</div>
+
+<footer>
+Creado por el C. Sgto. 1/o. Inftca. Ángel García Posadas<br>
+© 2026 AnGaPo
+</footer>
+
+</body>
+</html>
