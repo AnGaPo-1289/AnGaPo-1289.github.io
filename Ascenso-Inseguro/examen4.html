@@ -32,8 +32,13 @@ button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px;fon
 </head>
 
 <body>
+<script>
+if(!localStorage.getItem("usuarioActivo")){
+    window.location.href = "login.html";
+}
+</script>
 
-<header>04 - Ley del ISSFAM</header>
+<header id="title">04 - Ley del ISSFAM</header>
 <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
 <div class="container">
@@ -378,7 +383,7 @@ function updateInfo(){
 
 /* ===== BARRA DE PROGRESO ===== */
 function updateProgress(){
-  let pct=((current)/quiz.length)*100;
+  let pct=((current+1)/quiz.length)*100;
   document.getElementById("progressBar").style.width=pct+"%";
 }
 
@@ -415,6 +420,25 @@ function finishExam(){
     });
 
     document.getElementById("review").innerHTML=review;
+/* ===== GUARDAR ESTADÍSTICAS ===== */
+let usuario = localStorage.getItem("usuarioActivo");
+let historial = JSON.parse(localStorage.getItem("estadisticas")) || {};
+
+if(!historial[usuario]){
+    historial[usuario] = [];
+}
+
+let nombreExamen = document.getElementById("title").innerText;
+
+historial[usuario].push({
+    examen: nombreExamen,
+    fecha: new Date().toLocaleString(),
+    puntaje: correct,
+    total: total,
+    porcentaje: pct
+});
+
+localStorage.setItem("estadisticas", JSON.stringify(historial));
 }
 
   
@@ -442,7 +466,7 @@ function repeatIncorrect(){
 
 /* ===== VOLVER AL MENÚ ===== */
 function goBack(){
-  window.location.href="index.html";
+  window.location.href="examen.html";
 }
 
 /* ===== INICIALIZAR ===== */

@@ -47,7 +47,7 @@ header{
 .book{
     position:relative;
     width:100%;
-    aspect-ratio: 2 / 3; /* proporción real de libro */
+    aspect-ratio: 2 / 3;
     transform-style:preserve-3d;
     transition:transform .4s ease;
 }
@@ -95,12 +95,45 @@ footer{
     padding:15px;
     border-top:1px solid #1e293b;
 }
+
+/* Usuario */
+.usuario-box{
+    text-align:center;
+    margin-top:10px;
+}
+
+.usuario-box button{
+    margin-top:5px;
+    padding:6px 12px;
+    background:#2563eb;
+    border:none;
+    border-radius:5px;
+    color:white;
+    cursor:pointer;
+}
 </style>
 </head>
 
 <body>
 
-<header>Examen AnGaPo V3.2026</header>
+<!-- 🔐 VALIDAR SESIÓN -->
+<script>
+if(!localStorage.getItem("usuarioActivo")){
+    window.location.href = "login.html";
+}
+</script>
+
+<header>Ascenso Inseguro V.2026.2.25</header>
+
+<!-- 👤 USUARIO ACTIVO -->
+<div class="usuario-box">
+    <h3>Bienvenido: <span id="usuario"></span></h3>
+    <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    <button onclick="toggleEstadisticas()">Ver Estadísticas</button>
+<button onclick="limpiarHistorial()" style="background:#dc2626;">🗑 Limpiar Historial</button>
+    
+<div id="estadisticas" style="margin-top:10px;"></div>
+</div>
 
 <div class="container">
 
@@ -140,11 +173,12 @@ footer{
     </div>
     <div class="card-title">05 - Ley de Disciplina del Ejto., F.A.M. y G.N.</div>
 </a>
+
 <a href="examen6.html" class="card">
     <div class="book">
         <img src="portadas/default.jpg" onerror="this.src='portadas/default.jpg'">
     </div>
-    <div class="card-title">05 - Ley de Ascensos y Recompensas del Ejto., F.A.M. y G.N.</div>
+    <div class="card-title">06 - Ley de Ascensos y Recompensas del Ejto., F.A.M. y G.N.</div>
 </a>
 
 </div>
@@ -155,5 +189,79 @@ Creado por el C. Sgto. 1/o. Inftca. Ángel García Posadas<br>
 © 2026 AnGaPo
 </footer>
 
+<!-- 🔧 SCRIPT FINAL -->
+
+  <script>
+document.getElementById("usuario").innerText = localStorage.getItem("usuarioActivo");
+
+function cerrarSesion(){
+    localStorage.removeItem("usuarioActivo");
+    window.location.href = "login.html";
+}
+
+function verEstadisticas(){
+
+    let usuario = localStorage.getItem("usuarioActivo");
+    let historial = JSON.parse(localStorage.getItem("estadisticas")) || {};
+
+    if(historial[usuario] && historial[usuario].length > 0){
+
+        let html = "<h3>Historial:</h3>";
+
+        historial[usuario].forEach(e=>{
+
+            // Registros antiguos
+            if(e.resultado){
+                html += "<p>"+e.fecha+" → "+e.resultado+"</p>";
+            }
+
+            // Registros nuevos
+            else{
+                html += `
+                <div style="margin-bottom:12px; padding:10px; background:#1e293b; border-radius:10px;">
+                    <b>${e.examen}</b><br>
+                    ${e.fecha}<br>
+                    ${e.puntaje}/${e.total} (${e.porcentaje}%)
+                </div>
+                `;
+            }
+
+        });
+
+        document.getElementById("estadisticas").innerHTML = html;
+
+    }else{
+        document.getElementById("estadisticas").innerHTML = "Sin registros aún.";
+    }
+}
+function toggleEstadisticas(){
+
+    let div = document.getElementById("estadisticas");
+
+    if(div.innerHTML.trim() !== ""){
+        div.innerHTML = "";
+    }else{
+        verEstadisticas();
+    }
+}
+
+function limpiarHistorial(){
+
+    let usuario = localStorage.getItem("usuarioActivo");
+    let historial = JSON.parse(localStorage.getItem("estadisticas")) || {};
+
+    if(confirm("¿Seguro que deseas borrar todo el historial?")){
+
+        if(historial[usuario]){
+            historial[usuario] = [];
+            localStorage.setItem("estadisticas", JSON.stringify(historial));
+        }
+
+        document.getElementById("estadisticas").innerHTML = "Historial eliminado.";
+    }
+}
+</script>
+    
+</script>
 </body>
 </html>
