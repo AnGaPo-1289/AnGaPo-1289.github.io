@@ -4,7 +4,7 @@ const usuarios = [
   { usuario: "Claux077", password: "A10044529" },
   { usuario: "zenirmrte5221", password: "D3248452" },
   { usuario: "AriadnaMartinez-g517d", password: "A10101226" },
-  { usuario: "Martin cortes", password: "D1159565" },
+  { usuario: "Martin_cortes", password: "D1159565" },
   { usuario: "chaires", password: "ABC123" }
 ];
 
