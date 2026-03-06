@@ -36,11 +36,16 @@ input{
 button{
     width:100%;
     padding:10px;
+    margin-top:10px;
     background:#2563eb;
     color:#fff;
     border:none;
     border-radius:5px;
     cursor:pointer;
+}
+
+.demo-btn{
+    background:#16a34a;
 }
 </style>
 </head>
@@ -52,25 +57,45 @@ button{
 
 <input type="text" id="usuario" placeholder="Usuario">
 <input type="password" id="password" placeholder="Contraseña">
+
 <button onclick="login()">Entrar</button>
+
+<button class="demo-btn" onclick="modoDemo()">Probar DEMO</button>
 
 <p id="mensaje"></p>
 </div>
 
 <script>
+
 function login(){
+
     let user = document.getElementById("usuario").value;
     let pass = document.getElementById("password").value;
 
     let valido = validarUsuario(user, pass);
 
     if(valido){
+
         localStorage.setItem("usuarioActivo", user);
         window.location.href = "examen.html";
+
     } else {
+
         document.getElementById("mensaje").innerText = "Credenciales incorrectas";
+
     }
 }
+
+/* ===== DEMO ===== */
+
+function modoDemo(){
+
+    localStorage.setItem("modoDemo","true");
+
+    window.location.href = "demo.html";
+
+}
+
 </script>
 
 </body>

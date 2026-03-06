@@ -1,3 +1,4 @@
+// Lista de usuarios
 const usuarios = [
   { usuario: "angel", password: "C9548673" },
   { usuario: "Ninya", password: "A10047513" },
@@ -11,5 +12,11 @@ const usuarios = [
 
 // Función para validar usuario
 function validarUsuario(user, pass) {
-  return usuarios.find(u => u.usuario === user && u.password === pass);
+
+  const usuarioEncontrado = usuarios.find(u =>
+    u.usuario === user && u.password === pass
+  );
+
+  return usuarioEncontrado ? true : false;
+
 }

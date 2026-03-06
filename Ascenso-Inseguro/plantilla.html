@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen - AnGaPo</title>
+
+<!-- 🔐 Validar sesión -->
+<script>
+if(!localStorage.getItem("usuarioActivo")){
+    window.location.href = "login.html";
+}
+</script>
+
+<!-- 🎨 Estilos -->
+<link rel="stylesheet" href="css/examen.css">
+
+</head>
+
+<body>
+
+<header id="title"></header>
+
+<div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="container">
+
+    <!-- ===== AREA DEL EXAMEN ===== -->
+    <div id="quizArea">
+
+        <button class="btn-finish" onclick="finishExam()">
+            Finalizar examen
+        </button>
+
+        <div class="card" id="questionBox"></div>
+
+        <div id="optionsBox"></div>
+
+        <div class="info">
+            ✅ Correctas: <span id="ok">0</span><br>
+            ❌ Incorrectas: <span id="bad">0</span><br>
+            ⏳ Faltantes: <span id="left">0</span>
+        </div>
+
+        <button class="btn-primary hidden" id="nextBtn" onclick="nextQuestion()">
+            Siguiente
+        </button>
+
+    </div>
+
+    <!-- ===== AREA RESULTADOS ===== -->
+    <div id="resultArea" class="hidden">
+
+        <div id="resultBox" class="result-box"></div>
+
+        <div id="review"></div>
+
+        <button class="btn-primary" onclick="repeatIncorrect()">
+            Repetir incorrectas
+        </button>
+
+        <button class="btn-back" onclick="goBack()">
+            ⬅ Volver al menú
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ⚙️ Motor del examen -->
+<script src="js/motor.js"></script>
+
+<script>
+
+// Bloquear clic derecho
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+});
+
+// Bloquear selección de texto
+document.addEventListener("selectstart", function(e){
+    e.preventDefault();
+});
+
+// Bloquear copiar con teclado
+document.addEventListener("keydown", function(e){
+
+    // Ctrl+C
+    if(e.ctrlKey && e.key === "c"){
+        e.preventDefault();
+    }
+
+    // Ctrl+A
+    if(e.ctrlKey && e.key === "a"){
+        e.preventDefault();
+    }
+
+    // Ctrl+U (ver código)
+    if(e.ctrlKey && e.key === "u"){
+        e.preventDefault();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
