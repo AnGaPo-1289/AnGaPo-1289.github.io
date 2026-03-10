@@ -9,7 +9,7 @@ const usuarios = [
   { usuario: "Martin_cortes", password: "D1159565" },
   { usuario: "edelangel", password: "Aege2025" },
   { usuario: "Mary_Gomez", password: "A10050481" },
-  { usuario: "chaires", password: "ABC123" }
+  { usuario: "chaires", password: "123" }
 ];
 
 // Función para validar usuario
