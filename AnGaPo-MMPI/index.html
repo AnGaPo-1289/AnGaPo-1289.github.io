@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Sistema de Evaluación MMPI</title>
+
+<link rel="stylesheet" href="estilos.css">
+
+</head>
+
+<body>
+
+<h1>Sistema de Evaluación Psicológica</h1>
+
+<h2>Seleccione sexo</h2>
+
+<select id="sexo">
+
+<option value="hombre">Hombre</option>
+<option value="mujer">Mujer</option>
+
+</select>
+<h2>Datos del evaluado</h2>
+
+<input id="nombre" placeholder="Nombre completo">
+
+<br><br>
+
+<input id="edad" type="number" placeholder="Edad">
+
+<br><br>
+
+<h2>Seleccione tipo de evaluación</h2>
+
+<div class="menu">
+
+<button onclick="iniciar('mmpi2')">
+
+MMPI-2 Completo  
+<br>
+567 preguntas  
+<br>
+Duración estimada: 60-90 minutos
+
+</button>
+
+<button onclick="iniciar('rf')">
+
+MMPI-2-RF  
+<br>
+338 preguntas  
+<br>
+Duración estimada: 35-50 minutos
+
+</button>
+
+<button onclick="iniciar('agp')">
+
+MMPI-AGP (Evaluación rápida)  
+<br>
+50 preguntas  
+<br>
+Duración estimada: 10 minutos
+
+</button>
+
+</div>
+
+<script src="menu.js"></script>
+
+
+</body>
+
+</html>

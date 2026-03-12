@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<title>AnGaPo MMPI</title>
+
+<link rel="stylesheet" href="estilos.css">
+
+</head>
+
+<body>
+
+<h1>Evaluación Psicológica MMPI</h1>
+
+<div class="container">
+
+<div id="cronometro"></div>
+
+<div id="progreso"></div>
+
+<div id="contenedorPregunta">
+
+<div id="pregunta"></div>
+
+</div>
+
+<div class="botones">
+
+<button onclick="responder(true)">
+Verdadero
+</button>
+
+<button onclick="responder(false)">
+Falso
+</button>
+
+<button onclick="anterior()">
+Anterior
+</button>
+
+</div>
+
+</div>
+
+
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Resultados MMPI</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+margin-top:30px;
+}
+
+#grafica{
+border:1px solid #ccc;
+margin-top:20px;
+}
+
+#resultado{
+margin-top:30px;
+font-size:18px;
+}
+
+button{
+margin-top:20px;
+padding:10px 20px;
+font-size:16px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Perfil Psicológico MMPI</h1>
+
+<div id="datosPaciente"></div>
+
+<canvas id="grafica" width="900" height="400"></canvas>
+
+<div id="resultado"></div>
+
+<button onclick="generarPDF()">Generar Informe PDF</button>
+
+<script src="data.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="perfil.js"></script>
+
+</body>
+
+</html>
