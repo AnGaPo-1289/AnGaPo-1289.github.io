@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<title>Mi Tienda</title>
+
+<link rel="stylesheet" href="estilos.css">
+
+</head>
+
+<body>
+
+<div class="barra">
+
+<div class="logo">
+<img src="logo.png" alt="Mi Tienda">
+</div>
+
+<input type="text" id="buscador" placeholder="🔎 Buscar producto..." class="buscador">
+
+</div>
+
+<div class="filtros">
+
+<button onclick="filtrar('todos')">Todos</button>
+<button onclick="filtrar('oferta')">🔥 Ofertas</button>
+<button onclick="filtrar('nuevo')">🆕 Nuevos</button>
+<button onclick="filtrar('disponible')">✅ Disponibles</button>
+
+</div>
+
+<div class="contador">
+🛒 <span id="totalProductos"></span> productos
+🔥 <span id="totalOfertas"></span> ofertas
+🆕 <span id="totalNuevos"></span> nuevos
+❌ <span id="totalAgotados"></span> agotados
+</div>
+
+<div class="tienda"></div>
+
+<div class="modal" id="modal">
+<img id="imagenGrande">
+</div>
+
+<a class="whatsapp-float"
+href="https://wa.me/525548152810?text=Hola%20quiero%20informacion%20sobre%20los%20productos"
+target="_blank">
+💬
+</a>
+
+<script src="tienda.js"></script>
+
+</body>
+</html>
