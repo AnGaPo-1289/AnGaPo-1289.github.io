@@ -1,0 +1,195 @@
+body{
+font-family: Arial;
+background:#eef4ff;
+margin:0;
+padding:20px;
+}
+
+h1{
+text-align:center;
+}
+
+.contador{
+text-align:center;
+font-size:18px;
+margin:15px;
+font-weight:bold;
+}
+
+.tienda{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+}
+
+.producto{
+width:220px;
+background:white;
+border-radius:12px;
+padding:10px;
+margin:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.15);
+transition:all 0.3s ease;
+position:relative;
+text-align:center;
+}
+
+.producto:hover{
+transform:translateY(-6px);
+box-shadow:0 10px 20px rgba(0,0,0,0.25);
+}
+
+.producto img{
+width:100%;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.producto img:hover{
+transform:scale(1.05);
+}
+
+.precio{
+font-size:22px;
+color:#0a7d00;
+font-weight:bold;
+margin:10px 0;
+}
+
+.boton{
+display:block;
+background:#25D366;
+color:white;
+text-decoration:none;
+padding:10px;
+border-radius:6px;
+font-weight:bold;
+}
+
+.boton:hover{
+background:#1ebe5d;
+}
+
+/* imagen grande */
+
+.modal{
+display:none;
+position:fixed;
+z-index:1000;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+}
+
+.modal img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+/* whatsapp flotante */
+
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+font-size:30px;
+padding:15px;
+border-radius:50%;
+text-decoration:none;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+.whatsapp-float:hover{
+background:#1ebe5d;
+}
+
+.etiqueta{
+position:absolute;
+top:10px;
+left:10px;
+color:white;
+padding:5px 10px;
+font-size:12px;
+border-radius:6px;
+font-weight:bold;
+}
+
+/* OFERTA rojo */
+
+.oferta{
+background:#e63946;
+}
+
+/* NUEVO verde */
+
+.nuevo{
+background:#2a9d8f;
+}
+.etiqueta.agotado{
+background:#e60000;
+color:white;
+}
+
+.filtros{
+margin:20px;
+text-align:center;
+}
+
+.filtros button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#333;
+color:white;
+cursor:pointer;
+font-size:14px;
+}
+
+.filtros button:hover{
+background:#ff6600;
+}
+.producto img{
+width:100%;
+border-radius:10px;
+cursor:pointer;
+transition:transform 0.3s;
+}
+
+.producto img:hover{
+transform:scale(1.05);
+}
+.logo{
+text-align:center;
+margin-top:10px;
+}
+
+.barra{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:20px;
+padding:10px;
+background:#50C878;
+}
+
+.logo img{
+width:140px;
+}
+
+.buscador{
+padding:10px;
+width:300px;
+border-radius:8px;
+border:none;
+font-size:14px;
+}
