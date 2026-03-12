@@ -6,6 +6,7 @@ const usuarios = [
   { usuario: "zenirmrte5221", password: "D3248452" },
   { usuario: "odorupiero9716", password: "D0565211" },
   { usuario: "AriadnaMartinez-g517d", password: "A10101226" },
+  { usuario: "Noriega", password: "D4034050" },
   { usuario: "Martin_cortes", password: "D1159565" },
   { usuario: "edelangel", password: "Aege2025" },
   { usuario: "Mary_Gomez", password: "A10050481" },
