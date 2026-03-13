@@ -58,7 +58,7 @@ let producto=`
 
 ${etiquetaHTML}
 
-<img src="${p.imagen}">
+<img src="${p.imagen}" onclick="verImagen('${p.imagen}')">
 
 <h3 class="titulo">${p.titulo}</h3>
 
@@ -361,5 +361,22 @@ clon.style.opacity="0";
 setTimeout(()=>{
 clon.remove();
 },800);
+
+}
+function verImagen(src){
+
+let modal=document.getElementById("modal");
+let imagen=document.getElementById("imagenGrande");
+
+imagen.src=src;
+
+modal.style.display="flex";
+
+}
+/* cerrar imagen grande */
+
+document.getElementById("modal").onclick=function(){
+
+this.style.display="none";
 
 }
