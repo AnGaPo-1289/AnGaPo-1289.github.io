@@ -1,21 +1,153 @@
 [
-{"titulo":"Figura Joker Ninja Strike","precio":180,"stock":1,"imagen":"productos/Producto1.jpeg","etiqueta":"oferta"},
-{"titulo":"Muñeca Brittany Yoga","precio":120,"stock":1,"imagen":"productos/Producto2.jpeg","etiqueta":"oferta"},
-{"titulo":"Muñeca Barbie Teresa","precio":130,"stock":1,"imagen":"productos/Producto3.jpeg","etiqueta":"oferta"},
-{"titulo":"Figura Superman DC","precio":130,"stock":2,"imagen":"productos/Producto4.jpeg","etiqueta":"nuevo"},
-{"titulo":"Globos para agua 111 piezas","precio":25,"stock":4,"imagen":"productos/Producto5.jpeg","etiqueta":"oferta"},
-{"titulo":"Muñecas PinyPon","precio":130,"stock":1,"imagen":"productos/Producto6.jpeg","etiqueta":"oferta"},
-{"titulo":"Pistola Nerf","precio":80,"stock":1,"imagen":"productos/Producto7.jpeg","etiqueta":"oferta"},
-{"titulo":"Vaso con popote (rojo)","precio":60,"stock":1,"imagen":"productos/Producto8.jpeg","etiqueta":"nuevo"},
-{"titulo":"Tarro de vidrio limon (varios colores)","precio":35,"stock":4,"imagen":"productos/Producto9.jpeg","etiqueta":"nuevo"},
-{"titulo":"Muñeca Juguete","precio":15,"stock":2,"imagen":"productos/Producto10.jpeg","etiqueta":"oferta"},
-{"titulo":"Rompecabezas 68x50 cm","precio":120,"stock":0,"imagen":"productos/Producto11.jpeg","etiqueta":"oferta"},
-{"titulo":"Tazas medidoras","precio":25,"stock":2,"imagen":"productos/Producto12.jpeg","etiqueta":"nuevo"},
-{"titulo":"Set pintura de diamante","precio":20,"stock":3,"imagen":"productos/Producto13.jpeg","etiqueta":"nuevo"},
-{"titulo":"Fibras limpia trastes","precio":20,"stock":1,"imagen":"productos/Producto14.jpeg","etiqueta":"nuevo"},
-{"titulo":"UNO edición especial (Loteria Mexicana)","precio":140,"stock":1,"imagen":"productos/Producto15.jpeg","etiqueta":"nuevo"},
-{"titulo":"UNO edición especial (Dia de muertos)","precio":140,"stock":1,"imagen":"productos/Producto16.jpeg","etiqueta":"nuevo"},
-{"titulo":"Rompecabezas Naruto 150 piezas","precio":50,"stock":1,"imagen":"productos/Producto17.jpeg","etiqueta":"oferta"},
-{"titulo":"Muñeca Baby Alive (Bebe dulce bailarina)","precio":130,"stock":1,"imagen":"productos/Producto18.jpeg","etiqueta":"oferta"},
-{"titulo":"Muñeca PinyPon","precio":65,"stock":0,"imagen":"productos/Producto19.jpeg","etiqueta":"oferta"}
+{
+"titulo":"Figura Joker Ninja Strike",
+"precio":180,
+"stock":1,
+"imagen":"productos/Producto1.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Muñeca Brittany Yoga",
+"precio":120,
+"stock":1,
+"imagen":"productos/Producto2.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Muñeca Barbie Teresa",
+"precio":130,
+"stock":1,
+"imagen":"productos/Producto3.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Figura Superman DC",
+"precio":130,
+"stock":2,
+"imagen":"productos/Producto4.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"Globos para agua 111 piezas",
+"precio":25,
+"stock":4,
+"imagen":"productos/Producto5.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Muñecas PinyPon",
+"precio":130,
+"stock":1,
+"imagen":"productos/Producto6.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Pistola Nerf",
+"precio":80,
+"stock":1,
+"imagen":"productos/Producto7.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Vaso con popote (rojo)",
+"precio":60,
+"stock":1,
+"imagen":"productos/Producto8.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"Tarro de vidrio limon (varios colores)",
+"precio":35,
+"stock":4,
+"imagen":"productos/Producto9.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"Muñeca Juguete",
+"precio":15,
+"stock":2,
+"imagen":"productos/Producto10.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Rompecabezas 68x50 cm",
+"precio":120,
+"stock":0,
+"imagen":"productos/Producto11.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Tazas medidoras",
+"precio":25,
+"stock":2,
+"imagen":"productos/Producto12.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"Set pintura de diamante",
+"precio":20,
+"stock":3,
+"imagen":"productos/Producto13.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"Fibras limpia trastes",
+"precio":20,
+"stock":1,
+"imagen":"productos/Producto14.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"UNO edición especial (Loteria Mexicana)",
+"precio":140,
+"stock":1,
+"imagen":"productos/Producto15.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"UNO edición especial (Dia de muertos)",
+"precio":140,
+"stock":1,
+"imagen":"productos/Producto16.jpeg",
+"etiqueta":"nuevo"
+},
+
+{
+"titulo":"Rompecabezas Naruto 150 piezas",
+"precio":50,
+"stock":1,
+"imagen":"productos/Producto17.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Muñeca Baby Alive (Bebe dulce bailarina)",
+"precio":130,
+"stock":1,
+"imagen":"productos/Producto18.jpeg",
+"etiqueta":"oferta"
+},
+
+{
+"titulo":"Muñeca PinyPon",
+"precio":65,
+"stock":0,
+"imagen":"productos/Producto19.jpeg",
+"etiqueta":"oferta"
+}
 ]
