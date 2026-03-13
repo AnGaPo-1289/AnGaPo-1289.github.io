@@ -9,12 +9,17 @@ h1{
 text-align:center;
 }
 
+/* TIENDA GRID */
+
 .tienda{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
 padding:10px;
+justify-items:center;
 }
+
+/* TARJETA PRODUCTO */
 
 .producto{
 width:100%;
@@ -22,7 +27,6 @@ max-width:220px;
 background:white;
 border-radius:12px;
 padding:10px;
-margin:10px;
 box-shadow:0 2px 8px rgba(0,0,0,0.15);
 transition:all 0.3s ease;
 position:relative;
@@ -45,6 +49,8 @@ transition:transform 0.3s;
 transform:scale(1.05);
 }
 
+/* PRECIO */
+
 .precio{
 font-size:22px;
 color:#0a7d00;
@@ -52,12 +58,16 @@ font-weight:bold;
 margin:10px 0;
 }
 
+/* CATEGORIA */
+
 .categoria{
 font-size:12px;
 color:#777;
 margin-bottom:6px;
 text-transform:capitalize;
 }
+
+/* BOTON */
 
 .boton{
 display:block;
@@ -70,13 +80,14 @@ font-weight:bold;
 width:80%;
 margin:10px auto;
 text-align:center;
+cursor:pointer;
 }
 
 .boton:hover{
 background:#1ebe5d;
 }
 
-/* etiquetas */
+/* ETIQUETAS */
 
 .etiqueta{
 position:absolute;
@@ -99,7 +110,6 @@ background:#2a9d8f;
 
 .etiqueta.agotado{
 background:#e53935;
-color:white;
 position:absolute;
 top:10px;
 right:10px;
@@ -108,7 +118,7 @@ font-size:11px;
 border-radius:5px;
 }
 
-/* filtros */
+/* FILTROS */
 
 .filtros{
 margin:20px;
@@ -130,7 +140,7 @@ font-size:14px;
 background:#ff6600;
 }
 
-/* categorias */
+/* CATEGORIAS */
 
 .categorias{
 display:flex;
@@ -155,7 +165,7 @@ transition:0.2s;
 background:#00bcd4;
 }
 
-/* barra superior */
+/* BARRA SUPERIOR */
 
 .barra{
 display:flex;
@@ -164,16 +174,14 @@ justify-content:center;
 gap:20px;
 padding:10px;
 background:#50C878;
-}
-
-.logo{
-text-align:center;
-margin-top:10px;
+flex-wrap:wrap;
 }
 
 .logo img{
 width:140px;
 }
+
+/* BUSCADOR */
 
 .buscador{
 padding:10px;
@@ -183,7 +191,44 @@ border:none;
 font-size:14px;
 }
 
-/* modal imagen */
+/* CARRITO */
+
+.carrito-barra{
+text-align:center;
+font-size:18px;
+font-weight:bold;
+}
+
+.carrito-barra button{
+margin-left:10px;
+padding:8px 14px;
+border:none;
+border-radius:8px;
+background:#25D366;
+color:white;
+cursor:pointer;
+}
+
+/* BOTON ENVIAR */
+
+.btn-enviar{
+background:#0077ff;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+margin-left:10px;
+transition:0.2s;
+}
+
+.btn-enviar:hover{
+background:#005ed6;
+transform:scale(1.05);
+}
+
+/* MODAL IMAGEN */
 
 .modal{
 display:none;
@@ -204,7 +249,7 @@ max-height:90%;
 border-radius:10px;
 }
 
-/* whatsapp flotante */
+/* WHATSAPP FLOTANTE */
 
 .whatsapp-float{
 position:fixed;
@@ -223,38 +268,8 @@ box-shadow:0 0 10px rgba(0,0,0,0.3);
 background:#1ebe5d;
 }
 
-.carrito-barra{
-text-align:center;
-margin:15px;
-font-size:18px;
-font-weight:bold;
-}
+/* CARRITO DESPLEGABLE */
 
-.carrito-barra button{
-margin-left:10px;
-padding:8px 14px;
-border:none;
-border-radius:8px;
-background:#25D366;
-color:white;
-cursor:pointer;
-}
-.btn-enviar{
-background:#0077ff;
-color:white;
-border:none;
-padding:8px 14px;
-border-radius:6px;
-cursor:pointer;
-font-weight:bold;
-margin-left:10px;
-transition:0.2s;
-}
-
-.btn-enviar:hover{
-background:#e55d00;
-transform:scale(1.05);
-}
 .carrito-desplegable{
 position:fixed;
 top:70px;
@@ -272,63 +287,46 @@ z-index:1000;
 margin-top:0;
 }
 
+/* ITEMS CARRITO */
+
 .item-carrito{
-display:flex;
-justify-content:space-between;
-margin-bottom:8px;
-font-size:14px;
-}
-
-.eliminar{
-color:red;
-cursor:pointer;
-font-weight:bold;
-}
-
-.totalCarrito{
-margin-top:10px;
-font-weight:bold;
-}
-.item-carrito{
-
 display:flex;
 align-items:center;
 gap:10px;
 margin-bottom:10px;
 padding-bottom:8px;
 border-bottom:1px solid #eee;
-
 }
 
 .mini-img{
-
 width:40px;
 height:40px;
 object-fit:cover;
 border-radius:6px;
-
 }
 
 .info{
-
 flex:1;
 font-size:13px;
-
 }
 
 .info span{
-
 display:block;
 font-weight:bold;
 color:#2ecc71;
-
 }
 
 .eliminar{
-
 cursor:pointer;
 font-size:14px;
+color:red;
+}
 
+/* TOTAL */
+
+.totalCarrito{
+margin-top:10px;
+font-weight:bold;
 }
 
 /* RESPONSIVE MOVIL */
@@ -339,7 +337,22 @@ body{
 padding:10px;
 }
 
-/* barra superior */
+/* 3 productos por fila */
+
+.tienda{
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:8px;
+}
+
+/* producto */
+
+.producto{
+width:100%;
+max-width:none;
+padding:8px;
+}
+
+/* barra */
 
 .barra{
 flex-direction:column;
@@ -362,29 +375,14 @@ width:90%;
 /* carrito */
 
 .carrito-barra{
-margin:5px;
 font-size:16px;
-}
-
-/* productos */
-
-.producto{
-width:90%;
-max-width:320px;
-margin:auto;
-}
-
-/* imagen producto */
-
-.producto img{
-width:100%;
-height:auto;
 }
 
 /* boton carrito */
 
 .boton{
-width:90%;
+width:95%;
+font-size:13px;
 }
 
 /* filtros */
