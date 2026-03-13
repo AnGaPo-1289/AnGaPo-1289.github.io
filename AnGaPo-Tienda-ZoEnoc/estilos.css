@@ -31,18 +31,14 @@ box-shadow:0 2px 8px rgba(0,0,0,0.15);
 transition:all 0.3s ease;
 position:relative;
 text-align:center;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
 }
 
 .producto:hover{
 transform:translateY(-6px);
 box-shadow:0 10px 20px rgba(0,0,0,0.25);
-}
-
-.producto img{
-width:100%;
-border-radius:10px;
-cursor:pointer;
-transition:transform 0.3s;
 }
 
 .producto img:hover{
@@ -327,6 +323,21 @@ color:red;
 .totalCarrito{
 margin-top:10px;
 font-weight:bold;
+}
+
+.producto img{
+width:100%;
+height:160px;
+object-fit:contain;
+background:#fff;
+border-radius:10px;
+padding:5px;
+cursor:pointer;
+transition:transform 0.3s;
+}
+
+.producto img:hover{
+transform:scale(1.05);
 }
 
 /* RESPONSIVE MOVIL */
