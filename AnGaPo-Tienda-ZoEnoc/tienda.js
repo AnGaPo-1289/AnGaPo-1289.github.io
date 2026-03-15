@@ -142,6 +142,14 @@ if(tipo=="agotado"){
 filtrados=productosGlobal.filter(p=>p.stock==0);
 }
 
+if(tipo=="usado"){
+filtrados=productosGlobal.filter(p=>p.etiqueta=="usado");
+}
+
+if(tipo=="rebaja"){
+filtrados=productosGlobal.filter(p=>p.etiqueta=="rebaja");
+}
+
 mostrarProductos(filtrados);
 
 }
@@ -154,11 +162,16 @@ let ofertas=lista.filter(p=>p.etiqueta=="oferta").length;
 
 let nuevos=lista.filter(p=>p.etiqueta=="nuevo").length;
 
+let usados=lista.filter(p=>p.etiqueta=="usado").length;
+let rebajas=lista.filter(p=>p.etiqueta=="rebaja").length;
+
 let agotados=lista.filter(p=>p.stock==0).length;
 
 document.getElementById("btnTodos").innerText="Todos ("+total+")";
 document.getElementById("btnOfertas").innerText="🔥 Ofertas ("+ofertas+")";
 document.getElementById("btnNuevos").innerText="🆕 Nuevos ("+nuevos+")";
+document.getElementById("btnUsados").innerText="🟡 Usados ("+usados+")";
+document.getElementById("btnRebaja").innerText="🟠 Rebajas ("+rebajas+")";
 document.getElementById("btnAgotados").innerText="❌ Agotados ("+agotados+")";
 
 }
