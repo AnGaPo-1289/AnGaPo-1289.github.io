@@ -113,6 +113,14 @@ padding:4px 8px;
 font-size:11px;
 border-radius:5px;
 }
+.etiqueta.usado{
+background:#f1c40f;
+color:#000;
+}
+.etiqueta.rebaja{
+background:#ff7f00;
+color:#fff;
+}
 
 /* FILTROS */
 
