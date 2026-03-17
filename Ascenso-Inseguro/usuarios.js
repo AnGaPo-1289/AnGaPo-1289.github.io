@@ -8,12 +8,13 @@ const usuarios = [
   { usuario: "AriadnaMartinez-g517d", password: "A10101226" },
   { usuario: "Noriega", password: "D4034050" },
   { usuario: "Viridiana", password: "A10079912" },
+    { usuario: "Jose_Luis", password: "Seguridad01" },
   { usuario: "LuisRodríguez-qk3ey", password: "D4304362" },
   { usuario: "Martin_cortes", password: "D1159565" },
   { usuario: "edelangel", password: "Aege2025" },
   { usuario: "Mary_Gomez", password: "A10050481" },
   { usuario: "chaires", password: "123" }
-];
+];0
 
 // Función para validar usuario
 function validarUsuario(user, pass) {
